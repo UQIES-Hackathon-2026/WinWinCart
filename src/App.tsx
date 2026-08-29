@@ -2,7 +2,6 @@ import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { PhoneFrame } from './components/PhoneFrame'
 import { StartTripCta } from './components/StartTripCta'
 import { TabBar } from './components/TabBar'
-import { Basket } from './pages/Basket'
 import { CreateTrip } from './pages/CreateTrip'
 import { Home } from './pages/Home'
 import { KitchenSink } from './pages/KitchenSink'
@@ -11,6 +10,7 @@ import { Profile } from './pages/Profile'
 import { Results } from './pages/Results'
 import { Savings } from './pages/Savings'
 import { Trip } from './pages/Trip'
+import { Wallet } from './pages/Wallet'
 
 const tabBarHiddenPaths = new Set([
   '/profile',
@@ -39,7 +39,7 @@ export default function App() {
           <Route element={<Home />} path="/home" />
           <Route element={<Trip />} path="/trip" />
           <Route element={<MyList />} path="/list" />
-          <Route element={<Basket />} path="/basket" />
+          <Route element={<Wallet />} path="/wallet" />
           <Route element={<Savings />} path="/savings" />
           <Route element={<Profile />} path="/profile" />
           <Route element={<CreateTrip />} path="/trip/create" />

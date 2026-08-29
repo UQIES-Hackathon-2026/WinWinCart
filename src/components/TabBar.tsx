@@ -3,7 +3,7 @@ import {
   List,
   MapPin,
   PiggyBank,
-  ShoppingBag,
+  WalletCards,
   type LucideIcon,
 } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
@@ -18,7 +18,7 @@ const tabs: Tab[] = [
   { label: 'Home', path: '/home', icon: Home },
   { label: 'Trip', path: '/trip', icon: MapPin },
   { label: 'My list', path: '/list', icon: List },
-  { label: 'Basket', path: '/basket', icon: ShoppingBag },
+  { label: 'Wallet', path: '/wallet', icon: WalletCards },
   { label: 'Savings', path: '/savings', icon: PiggyBank },
 ]
 
