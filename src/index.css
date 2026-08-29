@@ -16,6 +16,8 @@
   }
 
   html {
+    --ease-refined: cubic-bezier(0.23, 1, 0.32, 1);
+
     background: theme('colors.paper');
     color: theme('colors.ink');
     font-family: theme('fontFamily.sans');
@@ -26,6 +28,7 @@
     min-width: 320px;
     min-height: 100vh;
     margin: 0;
+    overflow: hidden;
   }
 
   button,
@@ -38,29 +41,23 @@
   .tnum {
     font-variant-numeric: tabular-nums;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
-.phone-frame {
+.app-shell {
   position: relative;
   display: flex;
   width: 100%;
-  min-height: 100dvh;
+  height: 100dvh;
   flex-direction: column;
   overflow: hidden;
   background: theme('colors.paper');
-}
-
-@media (min-width: 481px) {
-  body {
-    display: grid;
-    min-height: 100vh;
-    place-items: center;
-  }
-
-  .phone-frame {
-    width: 390px;
-    height: 844px;
-    min-height: 844px;
-    border: 1px solid theme('colors.rule');
-  }
 }

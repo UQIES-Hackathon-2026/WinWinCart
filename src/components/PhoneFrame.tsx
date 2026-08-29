@@ -5,5 +5,5 @@ type PhoneFrameProps = {
 }
 
 export function PhoneFrame({ children }: PhoneFrameProps) {
-  return <div className="phone-frame">{children}</div>
+  return <div className="app-shell">{children}</div>
 }

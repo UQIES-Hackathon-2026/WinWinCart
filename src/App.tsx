@@ -1,26 +1,52 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { PhoneFrame } from './components/PhoneFrame'
 import { TabBar } from './components/TabBar'
+import { Basket } from './pages/Basket'
+import { CreateTrip } from './pages/CreateTrip'
+import { Home } from './pages/Home'
 import { KitchenSink } from './pages/KitchenSink'
-import { Placeholder } from './pages/Placeholder'
+import { MyList } from './pages/MyList'
+import { Profile } from './pages/Profile'
+import { Results } from './pages/Results'
+import { Savings } from './pages/Savings'
+import { Trip } from './pages/Trip'
+
+const tabBarHiddenPaths = new Set([
+  '/profile',
+  '/trip/create',
+  '/create-trip',
+  '/results',
+  '/kitchen-sink',
+])
 
 export default function App() {
+  const location = useLocation()
+  const showTabBar = !tabBarHiddenPaths.has(location.pathname)
+
   return (
     <PhoneFrame>
-      <main className="min-h-0 flex-1 overflow-y-auto pb-16">
+      <main
+        className={[
+          'scrollbar-hide min-h-0 flex-1 overflow-y-auto',
+          showTabBar ? 'pb-16' : '',
+        ].join(' ')}
+      >
         <Routes>
+          <Route element={<Navigate replace to="/home" />} path="/" />
+          <Route element={<Home />} path="/home" />
+          <Route element={<Trip />} path="/trip" />
+          <Route element={<MyList />} path="/list" />
+          <Route element={<Basket />} path="/basket" />
+          <Route element={<Savings />} path="/savings" />
+          <Route element={<Profile />} path="/profile" />
+          <Route element={<CreateTrip />} path="/trip/create" />
+          <Route element={<CreateTrip />} path="/create-trip" />
+          <Route element={<Results />} path="/results" />
           <Route element={<KitchenSink />} path="/kitchen-sink" />
-          <Route element={<Placeholder title="Home" />} path="/home" />
-          <Route element={<Placeholder title="Your shop" />} path="/list" />
-          <Route element={<Placeholder title="Savings" />} path="/savings" />
-          <Route element={<Placeholder title="Settings" />} path="/settings" />
-          <Route
-            element={<Navigate replace to="/kitchen-sink" />}
-            path="*"
-          />
+          <Route element={<Navigate replace to="/home" />} path="*" />
         </Routes>
       </main>
-      <TabBar />
+      {showTabBar && <TabBar />}
     </PhoneFrame>
   )
 }
