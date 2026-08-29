@@ -79,7 +79,7 @@ export const demoPromos: DemoPromo[] = [
   },
   {
     id: 'promo-3',
-    storeName: "Yuen's Market",
+    storeName: 'Sunlit Asian Supermarket',
     title: 'Asian greens bundle',
     detail: 'Bok choy 2 for $3.00',
     distanceKm: 13.8,

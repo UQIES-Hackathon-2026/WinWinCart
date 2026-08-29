@@ -1,4 +1,4 @@
-import { User } from 'lucide-react'
+import { ShoppingCart, User } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { BrandLockup } from '../components/BrandLockup'
 import { GoalProgress } from '../components/GoalProgress'
@@ -12,13 +12,22 @@ export function Home() {
     <div className="px-5 pb-24 pt-6">
       <div className="flex items-start justify-between gap-4">
         <BrandLockup />
-        <Link
-          aria-label="Open profile"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-ink text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
-          to="/profile"
-        >
-          <User size={20} strokeWidth={1.75} />
-        </Link>
+        <div className="flex shrink-0 items-center gap-2">
+          <Link
+            aria-label="Open cart"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-ink text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+            to="/cart"
+          >
+            <ShoppingCart size={20} strokeWidth={1.75} />
+          </Link>
+          <Link
+            aria-label="Open profile"
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-ink text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+            to="/profile"
+          >
+            <User size={20} strokeWidth={1.75} />
+          </Link>
+        </div>
       </div>
 
       <SavingsBasket

@@ -11,6 +11,8 @@ export default {
         rule: '#E5E5E5',
         mute: '#6B6B6B',
         sunk: '#FAFAFA',
+        cream: '#F5EFE1',
+        mint: '#EAF6EC',
       },
       fontFamily: {
         sans: ['Assistant', 'sans-serif'],

@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import type { DietNeed } from '../data/catalog'
 import { demoBasketLines, demoSavings } from '../data/demo'
 
 export type Transport = 'car' | 'bus' | 'walk'
@@ -8,6 +9,26 @@ export type OptimiseMode = 'price' | 'time' | 'both'
 export type BasketItem = {
   productId: string
   qty: number
+}
+
+export type CartLine = {
+  id: string
+  name: string
+  emoji: string
+  qty: number
+}
+
+export type SavedTripPlan = {
+  id: string
+  savedAt: string
+  mode: OptimiseMode
+  itemCount: number
+  stores: { name: string; chain: string }[]
+  groceries: number
+  travelCost: number
+  total: number
+  travelMinutes: number
+  saved: number
 }
 
 type AppState = {
@@ -20,6 +41,11 @@ type AppState = {
   basket: BasketItem[]
   tripList: BasketItem[]
   optimiseMode: OptimiseMode
+  shopCart: CartLine[]
+  maxDistanceKm: number
+  maxStores: number
+  dietNeeds: DietNeed[]
+  savedTrips: SavedTripPlan[]
   setSuburb: (suburb: string) => void
   setTransport: (transport: Transport) => void
   setLitresPer100km: (litres: number) => void
@@ -31,6 +57,15 @@ type AppState = {
   addToTripList: (productId: string) => void
   removeFromTripList: (productId: string) => void
   setTripListQty: (productId: string, qty: number) => void
+  addCartItem: (item: { id: string; name: string; emoji: string }) => void
+  setCartQty: (id: string, qty: number) => void
+  removeCartItem: (id: string) => void
+  clearShopCart: () => void
+  setMaxDistanceKm: (km: number) => void
+  setMaxStores: (count: number) => void
+  toggleDietNeed: (need: DietNeed) => void
+  saveTrip: (trip: SavedTripPlan) => void
+  removeSavedTrip: (id: string) => void
   resetDemo: () => void
 }
 
@@ -44,6 +79,11 @@ const defaultState = {
   basket: demoBasketLines,
   tripList: [] as BasketItem[],
   optimiseMode: 'both' as OptimiseMode,
+  shopCart: [] as CartLine[],
+  maxDistanceKm: 8,
+  maxStores: 3,
+  dietNeeds: [] as DietNeed[],
+  savedTrips: [] as SavedTripPlan[],
 }
 
 export const useApp = create<AppState>()(
@@ -98,6 +138,47 @@ export const useApp = create<AppState>()(
               : state.tripList.map((item) =>
                   item.productId === productId ? { ...item, qty } : item,
                 ),
+        })),
+      addCartItem: (item) =>
+        set((state) => {
+          const existing = state.shopCart.find((line) => line.id === item.id)
+          if (existing) {
+            return {
+              shopCart: state.shopCart.map((line) =>
+                line.id === item.id ? { ...line, qty: line.qty + 1 } : line,
+              ),
+            }
+          }
+          return { shopCart: [...state.shopCart, { ...item, qty: 1 }] }
+        }),
+      setCartQty: (id, qty) =>
+        set((state) => ({
+          shopCart:
+            qty <= 0
+              ? state.shopCart.filter((line) => line.id !== id)
+              : state.shopCart.map((line) =>
+                  line.id === id ? { ...line, qty } : line,
+                ),
+        })),
+      removeCartItem: (id) =>
+        set((state) => ({
+          shopCart: state.shopCart.filter((line) => line.id !== id),
+        })),
+      clearShopCart: () => set({ shopCart: [] }),
+      setMaxDistanceKm: (maxDistanceKm) => set({ maxDistanceKm }),
+      setMaxStores: (maxStores) =>
+        set({ maxStores: Math.max(1, Math.min(3, Math.round(maxStores) || 1)) }),
+      toggleDietNeed: (need) =>
+        set((state) => ({
+          dietNeeds: state.dietNeeds.includes(need)
+            ? state.dietNeeds.filter((item) => item !== need)
+            : [...state.dietNeeds, need],
+        })),
+      saveTrip: (trip) =>
+        set((state) => ({ savedTrips: [trip, ...state.savedTrips] })),
+      removeSavedTrip: (id) =>
+        set((state) => ({
+          savedTrips: state.savedTrips.filter((trip) => trip.id !== id),
         })),
       resetDemo: () => set(defaultState),
     }),
