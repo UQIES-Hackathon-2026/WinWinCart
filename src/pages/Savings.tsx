@@ -1,9 +1,12 @@
+import { useState } from 'react'
+import { GoalChart, type GoalChartType } from '../components/GoalChart'
 import { GoalProgress } from '../components/GoalProgress'
 import { HeroFigure, SectionLabel, StatRow } from '../components/ui'
 import { demoSavings, demoTrips, formatTripStoreName } from '../data/demo'
 import { formatCurrency, formatDate } from '../lib/format'
 
 export function Savings() {
+  const [chartType, setChartType] = useState<GoalChartType>('donut')
   const budgetProgress = Math.min(
     demoSavings.thisMonthSpent / demoSavings.goal.target,
     1,
@@ -22,6 +25,14 @@ export function Savings() {
       <p className="mt-2 text-[13px] text-mute">
         All time saved vs Coles/Woolworths average
       </p>
+
+      <GoalChart
+        chartType={chartType}
+        current={demoSavings.goal.current}
+        name={demoSavings.goal.name}
+        onChartTypeChange={setChartType}
+        target={demoSavings.goal.target}
+      />
 
       <div className="savings-stats mt-8 border-t border-rule">
         <StatRow

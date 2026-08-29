@@ -615,6 +615,179 @@ html[data-theme='cyberpunk'] {
   box-shadow: 0 0 14px var(--glow);
 }
 
+.goal-chart-section {
+  margin-top: 2rem;
+  padding: clamp(1.25rem, 4vw, 2rem);
+  border: 1px solid color-mix(in srgb, var(--ink) 12%, transparent);
+  border-radius: 1.5rem;
+  background:
+    linear-gradient(145deg, color-mix(in srgb, var(--forest) 10%, var(--paper)), var(--glass)),
+    var(--paper);
+  box-shadow: 0 16px 36px var(--shadow);
+}
+
+.goal-chart-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.goal-chart-title {
+  margin-top: 0.35rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.goal-chart-select {
+  min-height: 2.75rem;
+  max-width: 9.5rem;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--ink) 20%, transparent);
+  border-radius: 0.75rem;
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.goal-chart-body {
+  display: grid;
+  grid-template-columns: minmax(12rem, 1fr) minmax(9rem, 0.8fr);
+  align-items: center;
+  gap: clamp(1.5rem, 5vw, 3rem);
+  min-height: 15rem;
+  margin-top: 1.5rem;
+}
+
+.goal-chart-visual {
+  position: relative;
+  display: grid;
+  min-height: 13rem;
+  place-items: center;
+}
+
+.goal-chart-svg {
+  width: min(100%, 14rem);
+  height: auto;
+  overflow: visible;
+}
+
+.goal-chart-value {
+  filter: drop-shadow(0 0 8px var(--glow));
+  transition: stroke-dasharray 700ms var(--ease-refined);
+}
+
+.goal-chart-center {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--ink);
+}
+
+.goal-chart-center strong {
+  font-size: clamp(2rem, 8vw, 3.25rem);
+  line-height: 1;
+}
+
+.goal-chart-center span {
+  margin-top: 0.35rem;
+  color: var(--mute);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.goal-pie-chart {
+  width: min(100%, 14rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: conic-gradient(
+    var(--forest) 0 var(--goal-progress),
+    var(--rule) var(--goal-progress) 100%
+  );
+  box-shadow: 0 0 22px var(--glow);
+  transition: background 700ms var(--ease-refined);
+}
+
+.goal-bar-chart {
+  width: min(100%, 25rem);
+}
+
+.goal-bar-track {
+  height: 2.25rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
+  border-radius: 999px;
+  background: var(--rule);
+}
+
+.goal-bar-value {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--forest), var(--lime));
+  box-shadow: 0 0 18px var(--glow);
+  transition: width 700ms var(--ease-refined);
+}
+
+.goal-bar-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  color: var(--mute);
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+
+.goal-chart-summary {
+  min-width: 0;
+}
+
+.goal-chart-amount {
+  font-family: 'Sirage', theme('fontFamily.sans');
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  line-height: 1;
+  color: var(--forest);
+}
+
+.goal-chart-caption {
+  margin-top: 0.5rem;
+  color: var(--mute);
+  font-size: 0.8125rem;
+}
+
+.goal-chart-legend {
+  display: grid;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  color: var(--mute);
+  font-size: 0.8125rem;
+}
+
+.goal-chart-legend span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.goal-legend-dot {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+}
+
+.goal-legend-dot-current {
+  background: var(--forest);
+}
+
+.goal-legend-dot-remaining {
+  background: var(--rule);
+}
+
 .accent-orb-lime {
   background: color-mix(in srgb, var(--lime) 25%, transparent);
 }
@@ -910,6 +1083,34 @@ html[data-theme^='dell-1996'] .theme-choice {
   }
 }
 
+@media (max-width: 599px) {
+  .goal-chart-header {
+    flex-direction: column;
+  }
+
+  .goal-chart-select {
+    width: 100%;
+    max-width: none;
+  }
+
+  .goal-chart-body {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .goal-chart-visual {
+    min-height: 12rem;
+  }
+
+  .goal-chart-summary {
+    text-align: center;
+  }
+
+  .goal-chart-legend {
+    justify-items: center;
+  }
+}
+
 @media (min-width: 600px) {
   body {
     padding: 16px;
@@ -1028,6 +1229,10 @@ html[data-theme^='dell-1996'] .theme-choice {
 
   .page-savings > section {
     grid-column: 2;
+  }
+
+  .page-savings > .goal-chart-section {
+    grid-column: 1 / -1;
   }
 
   .page-savings > section:last-child {
