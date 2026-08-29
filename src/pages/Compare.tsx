@@ -1,11 +1,22 @@
-import { ArrowLeft, Check, ChevronDown, Clock, Loader2 } from 'lucide-react'
+import {
+  ArrowLeft,
+  BadgePercent,
+  Check,
+  ChevronDown,
+  Clock,
+  Loader2,
+} from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { StoreBadgeRow } from '../components/StoreBadge'
+import type { Chain } from '../data/stores'
 import {
   buildTripSuggestions,
+  dealFor,
   fancySaving,
+  guaranteedDealFor,
   type CompareSettings,
+  type ItemDeal,
   type TripSuggestion,
 } from '../lib/compare'
 import { formatCurrency } from '../lib/format'
@@ -13,6 +24,130 @@ import { useApp } from '../store/useApp'
 
 function tripChains(trip: TripSuggestion) {
   return trip.plans.map((plan) => plan.store.chain)
+}
+
+function ViewDetailsToggle({
+  open,
+  onToggle,
+}: {
+  open: boolean
+  onToggle: () => void
+}) {
+  return (
+    <button
+      aria-expanded={open}
+      className="mt-2 flex w-full items-center justify-center gap-1 py-1 text-[13px] font-semibold text-forest"
+      onClick={onToggle}
+      type="button"
+    >
+      {open ? 'Hide item details' : 'View item details'}
+      <ChevronDown
+        aria-hidden="true"
+        className={open ? 'rotate-180' : ''}
+        size={14}
+        strokeWidth={2}
+      />
+    </button>
+  )
+}
+
+function TripItemsPanel({
+  trip,
+  minDeals = 0,
+}: {
+  trip: TripSuggestion
+  minDeals?: number
+}) {
+  const shopCart = useApp((state) => state.shopCart)
+
+  const placement = new Map<
+    string,
+    { chain: Chain; unitPrice: number; storeName: string }
+  >()
+  for (const plan of trip.plans) {
+    for (const entry of plan.lines) {
+      placement.set(entry.line.id, {
+        chain: plan.store.chain,
+        unitPrice: entry.unitPrice,
+        storeName: plan.store.name,
+      })
+    }
+  }
+
+  const deals = new Map<string, ItemDeal>()
+  for (const line of shopCart) {
+    const place = placement.get(line.id)
+    const deal = place ? dealFor(line.id, place.chain) : null
+    if (deal) deals.set(line.id, deal)
+  }
+  // Guarantee the headline trip always shows a few specials.
+  for (const line of shopCart) {
+    if (deals.size >= minDeals) break
+    const place = placement.get(line.id)
+    if (place && !deals.has(line.id)) {
+      deals.set(line.id, guaranteedDealFor(line.id, place.chain))
+    }
+  }
+
+  const dealCount = deals.size
+
+  return (
+    <div className="mt-3 rounded-xl border border-rule bg-sunk p-3">
+      <p className="text-[12px] font-bold uppercase tracking-[0.08em] text-mute">
+        Your items{dealCount > 0 ? ` · ${dealCount} on special` : ''}
+      </p>
+      <ul className="mt-2 divide-y divide-rule">
+        {shopCart.map((line) => {
+          const place = placement.get(line.id)
+          const deal = deals.get(line.id) ?? null
+          const now = (place?.unitPrice ?? 0) * line.qty
+          const was = deal ? now / (1 - deal.fraction) : null
+          return (
+            <li key={line.id} className="flex items-center gap-2 py-2">
+              <span aria-hidden="true" className="text-lg">
+                {line.emoji}
+              </span>
+              <span className="min-w-0 flex-1">
+                <span className="block truncate text-[13px] font-semibold">
+                  {line.name}
+                  {line.qty > 1 && (
+                    <span className="text-mute"> ×{line.qty}</span>
+                  )}
+                </span>
+                {place && (
+                  <span className="block text-[11px] text-mute">
+                    {place.storeName}
+                  </span>
+                )}
+              </span>
+              {deal && (
+                <span className="shrink-0 rounded-full bg-lime px-2 py-0.5 text-[11px] font-bold text-ink">
+                  {deal.label}
+                </span>
+              )}
+              <span className="tnum shrink-0 whitespace-nowrap text-right text-[13px]">
+                {was ? (
+                  <>
+                    <span className="text-mute line-through">
+                      {formatCurrency(was)}
+                    </span>{' '}
+                    <span className="font-bold text-red-600">
+                      {formatCurrency(now)}
+                    </span>
+                  </>
+                ) : (
+                  <span className="font-semibold">{formatCurrency(now)}</span>
+                )}
+              </span>
+            </li>
+          )
+        })}
+      </ul>
+      <p className="mt-2 text-[11px] text-mute">
+        Specials shown are illustrative.
+      </p>
+    </div>
+  )
 }
 
 function TripDetails({ trip }: { trip: TripSuggestion }) {
@@ -108,6 +243,7 @@ export function Compare() {
 
   const [loading, setLoading] = useState(true)
   const [expanded, setExpanded] = useState<string | null>(null)
+  const [itemsOpen, setItemsOpen] = useState<string | null>(null)
   const [selectedId, setSelectedId] = useState<string | null>(null)
 
   useEffect(() => {
@@ -259,6 +395,15 @@ export function Compare() {
                             ? 'Selected'
                             : 'Select this trip'}
                         </button>
+                        <ViewDetailsToggle
+                          open={itemsOpen === trip.id}
+                          onToggle={() =>
+                            setItemsOpen((current) =>
+                              current === trip.id ? null : trip.id,
+                            )
+                          }
+                        />
+                        {itemsOpen === trip.id && <TripItemsPanel trip={trip} />}
                       </div>
                     )}
                   </div>
@@ -301,6 +446,8 @@ function TripOption({
   selected: boolean
   onSelect: () => void
 }) {
+  const [showItems, setShowItems] = useState(false)
+
   return (
     <div
       className={[
@@ -310,7 +457,8 @@ function TripOption({
     >
       <div className="flex items-center justify-between gap-3">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-lime px-3 py-1 text-[12px] font-bold text-ink">
-          Best trip
+          <BadgePercent aria-hidden="true" size={14} strokeWidth={2.25} />
+          Hot deals
         </span>
         <span className="text-[13px] font-semibold text-mute">#{rank}</span>
       </div>
@@ -335,6 +483,12 @@ function TripOption({
         {selected && <Check aria-hidden="true" size={16} strokeWidth={2.5} />}
         {selected ? 'Selected' : 'Select this trip'}
       </button>
+
+      <ViewDetailsToggle
+        open={showItems}
+        onToggle={() => setShowItems((current) => !current)}
+      />
+      {showItems && <TripItemsPanel minDeals={2} trip={trip} />}
     </div>
   )
 }
