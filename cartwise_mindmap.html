@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CartWise — Product & Engineering Mind Map</title>
+<style>
+  :root{
+    --bg:#0b1020; --panel:#121a2d; --panel2:#17223a; --text:#eef4ff;
+    --muted:#9fb0cf; --line:#35507e; --accent:#7dd3fc; --green:#86efac;
+    --yellow:#fde68a; --pink:#f9a8d4; --purple:#c4b5fd; --danger:#fca5a5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:
+    radial-gradient(circle at top right,#172554 0,transparent 30%),
+    radial-gradient(circle at bottom left,#134e4a 0,transparent 28%),var(--bg);color:var(--text)}
+  header{position:sticky;top:0;z-index:20;background:rgba(11,16,32,.92);backdrop-filter:blur(10px);
+    border-bottom:1px solid #25334f;padding:16px 22px}
+  .topbar{display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+  h1{margin:0;font-size:20px}
+  .subtitle{color:var(--muted);font-size:13px;margin-top:4px}
+  .controls{display:flex;gap:8px;flex-wrap:wrap}
+  button,.fileLabel{background:#1e2b48;color:var(--text);border:1px solid #33486f;border-radius:10px;
+    padding:9px 12px;cursor:pointer;font-weight:650;font-size:13px}
+  button:hover,.fileLabel:hover{border-color:var(--accent)}
+  .primary{background:#0c4a6e;border-color:#0284c7}
+  .tabs{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+  .tab{padding:8px 13px;border-radius:999px;background:#17223a;color:var(--muted);cursor:pointer;border:1px solid #2a3a5d}
+  .tab.active{background:#e0f2fe;color:#082f49;border-color:#7dd3fc}
+  main{padding:24px;max-width:1700px;margin:auto}
+  .view{display:none}.view.active{display:block}
+  .notice{border:1px solid #33486f;background:rgba(18,26,45,.8);padding:12px 14px;border-radius:12px;color:#c8d5ec;margin-bottom:18px}
+  .legend{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:10px 0 20px}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block;margin-right:5px}
+  .mindmap{overflow:auto;padding:26px 10px 42px}
+  .root{width:min(480px,90vw);margin:0 auto 40px;text-align:center;background:linear-gradient(135deg,#0c4a6e,#312e81);
+    border:1px solid #60a5fa;border-radius:20px;padding:20px;box-shadow:0 12px 38px rgba(0,0,0,.28)}
+  .root h2{margin:0 0 8px;font-size:24px}.root p{margin:0;color:#dbeafe}
+  .branches{display:grid;grid-template-columns:repeat(3,minmax(300px,1fr));gap:26px;position:relative}
+  .branch{position:relative;background:rgba(18,26,45,.78);border:1px solid #2b3d61;border-radius:18px;padding:18px}
+  .branch:before{content:"";position:absolute;top:-26px;left:50%;height:26px;border-left:2px solid var(--line)}
+  .branch h3{margin:0 0 14px;font-size:18px}
+  .node{position:relative;background:var(--panel2);border:1px solid #314768;border-radius:14px;padding:13px;margin:14px 0;
+    box-shadow:0 5px 16px rgba(0,0,0,.16)}
+  .node:before{content:"";position:absolute;left:18px;top:-15px;height:15px;border-left:2px solid var(--line)}
+  .node:first-of-type:before{display:none}
+  .node-title{font-weight:800;margin-bottom:6px}
+  .node ul{margin:7px 0 0;padding-left:18px;color:#cbd7ea}
+  .node li{margin:4px 0}
+  .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.02em;border-radius:999px;padding:4px 7px;margin:3px 3px 0 0}
+  .frontend{border-top:4px solid var(--accent)} .backend{border-top:4px solid var(--green)}
+  .baas{border-top:4px solid var(--purple)} .ux{border-top:4px solid var(--yellow)}
+  .t-front{background:#0c4a6e}.t-back{background:#14532d}.t-baas{background:#4c1d95}.t-user{background:#713f12}
+  .flow{display:flex;gap:22px;align-items:stretch;overflow-x:auto;padding:28px 8px 42px}
+  .step{min-width:245px;max-width:245px;background:rgba(18,26,45,.9);border:1px solid #33486f;border-radius:16px;padding:16px;position:relative}
+  .step:not(:last-child):after{content:"→";position:absolute;right:-18px;top:44%;font-size:25px;color:var(--accent)}
+  .step .num{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#e0f2fe;color:#082f49;font-weight:900;margin-bottom:10px}
+  .step h3{margin:0 0 8px;font-size:16px}.step p{color:#c4d1e6;font-size:13px}
+  .mini{font-size:12px;color:var(--muted);margin-top:8px}
+  .architecture{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;align-items:start;gap:10px;min-width:1100px}
+  .arch-col{background:rgba(18,26,45,.78);border:1px solid #2d4064;border-radius:18px;padding:18px}
+  .arrow{display:grid;place-items:center;font-size:32px;color:var(--accent);padding-top:70px}
+  .boundary{border:1px dashed #8b5cf6;padding:10px;border-radius:12px;margin-top:12px;color:#ddd6fe;font-size:12px}
+  .editable[contenteditable="true"]{outline:1px dashed transparent;border-radius:5px}
+  .editable[contenteditable="true"]:focus{outline-color:#7dd3fc;background:rgba(125,211,252,.07)}
+  .editmode .editable{outline:1px dashed #496387}
+  .footer-note{color:var(--muted);font-size:12px;margin-top:22px}
+  @media(max-width:1050px){
+    .branches{grid-template-columns:1fr}.branch:before{display:none}
+    .architecture{grid-template-columns:1fr;min-width:auto}.arrow{padding:0;transform:rotate(90deg)}
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="topbar">
+    <div>
+      <h1>CartWise — Hackathon Product & Engineering Mind Map</h1>
+      <div class="subtitle">Goal → Budget → Optimise groceries → Spend via BaaS → Track → Save the difference → Goal progress</div>
+    </div>
+    <div class="controls">
+      <button id="editBtn" class="primary">Enable editing</button>
+      <button id="saveBtn">Save locally</button>
+      <button id="exportBtn">Export JSON</button>
+      <label class="fileLabel">Import JSON<input id="importFile" type="file" accept=".json" hidden></label>
+      <button id="resetBtn">Reset</button>
+    </div>
+  </div>
+  <div class="tabs">
+    <div class="tab active" data-target="engineering">Engineer View</div>
+    <div class="tab" data-target="user">User Experience Cycle</div>
+    <div class="tab" data-target="architecture">System Boundary</div>
+  </div>
+</header>
+
+<main id="workspace">
+<section id="engineering" class="view active">
+  <div class="notice"><b>How to read this:</b> each branch is an engineering ownership area. Nodes underneath show features, responsibilities, and the interfaces connecting them.</div>
+
+  <div class="mindmap">
+    <div class="root">
+      <h2 class="editable">CartWise Product System</h2>
+      <p class="editable">CartWise owns the product experience and financial behaviour logic. The BaaS provider owns regulated banking infrastructure.</p>
+    </div>
+
+    <div class="branches">
+      <div class="branch frontend">
+        <h3>🖥️ Front-end / Product Experience</h3>
+
+        <div class="node">
+          <div class="node-title editable">Onboarding + Goal Setup</div>
+          <ul>
+            <li class="editable">Create account / sign in</li>
+            <li class="editable">Choose financial goal and target amount</li>
+            <li class="editable">Set weekly grocery budget</li>
+            <li class="editable">Choose underspend rule: save all / split / buffer</li>
+          </ul>
+          <span class="tag t-front">UI</span><span class="tag t-user">USER INPUT</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title editable">Grocery Planning</div>
+          <ul>
+            <li class="editable">Build grocery basket</li>
+            <li class="editable">Show price estimates, specials, travel cost/time</li>
+            <li class="editable">Present recommended store or multi-store plan</li>
+          </ul>
+          <span class="tag t-front">UI</span><span class="tag t-back">OPTIMISER API</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title editable">Wallet + Card Experience</div>
+          <ul>
+            <li class="editable">Available grocery balance</li>
+            <li class="editable">Weekly budget / spent / remaining</li>
+            <li class="editable">Card status and spending-control feedback</li>
+            <li class="editable">Live transaction feed</li>
+          </ul>
+          <span class="tag t-front">UI</span><span class="tag t-baas">BAAS DATA</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title editable">Savings + Dashboard</div>
+          <ul>
+            <li class="editable">Show underspend amount</li>
+            <li class="editable">Allocate saving to goal</li>
+            <li class="editable">Progress bar, trends and projection</li>
+            <li class="editable">Budget alerts / savings streaks</li>
+          </ul>
+          <span class="tag t-front">UI</span><span class="tag t-back">ANALYTICS</span>
+        </div>
+      </div>
+
+      <div class="branch backend">
+        <h3>⚙️ Back-end / CartWise Logic</h3>
+
+        <div class="node">
+          <div class="node-title editable">Core Data Model</div>
+          <ul>
+            <li class="editable">User</li><li class="editable">Goal</li><li class="editable">Budget</li>
+            <li class="editable">Basket</li><li class="editable">Transactions</li><li class="editable">Savings</li>
+          </ul>
+          <span class="tag t-back">DATABASE</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title editable">Grocery Optimisation Engine</div>
+          <ul>
+            <li class="editable">Store/product price ingestion</li>
+            <li class="editable">Basket cost comparison</li>
+            <li class="editable">Specials / substitutions</li>
+            <li class="editable">Travel time + travel cost weighting</li>
+          </ul>
+          <span class="tag t-back">ALGORITHM</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title editable">Transaction Event Processor</div>
+          <ul>
+            <li class="editable">Receive BaaS transaction webhooks</li>
+            <li class="editable">Match transactions to grocery wallet</li>
+            <li class="editable">Update spend and remaining budget</li>
+            <li class="editable">Trigger alerts and dashboard refresh</li>
+          </ul>
+          <span class="tag t-back">WEBHOOKS</span><span class="tag t-baas">BAAS</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title editable">Savings / Goal Engine</div>
+          <ul>
+            <li class="editable">Calculate budget − actual spend</li>
+            <li class="editable">Apply underspend rule</li>
+            <li class="editable">Create goal contribution request</li>
+            <li class="editable">Update projections and progress</li>
+          </ul>
+          <span class="tag t-back">BUSINESS LOGIC</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title editable">Receipt Intelligence</div>
+          <ul>
+            <li class="editable">Receipt upload</li>
+            <li class="editable">OCR / item extraction</li>
+            <li class="editable">Compare planned vs purchased items</li>
+            <li class="editable">Generate item-level shopping insights</li>
+          </ul>
+          <span class="tag t-back">OCR</span><span class="tag t-front">OPTIONAL MVP+</span>
+        </div>
+      </div>
+
+      <div class="branch baas">
+        <h3>🏦 BaaS / Infrastructure Division</h3>
+
+        <div class="node">
+          <div class="node-title editable">Account + Wallet Provisioning</div>
+          <ul>
+            <li class="editable">Create regulated customer account/wallet</li>
+            <li class="editable">Maintain ledger balance</li>
+            <li class="editable">Expose wallet/account APIs to CartWise</li>
+          </ul>
+          <span class="tag t-baas">PROVIDER</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title editable">Card Issuing + Controls</div>
+          <ul>
+            <li class="editable">Issue physical/virtual card</li>
+            <li class="editable">MCC grocery restrictions</li>
+            <li class="editable">Weekly spending limits</li>
+            <li class="editable">Authorisation / settlement</li>
+          </ul>
+          <span class="tag t-baas">PROVIDER</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title editable">Compliance + Identity</div>
+          <ul>
+            <li class="editable">KYC</li><li class="editable">AML</li>
+            <li class="editable">Regulatory infrastructure</li>
+            <li class="editable">Payment compliance</li>
+          </ul>
+          <span class="tag t-baas">REGULATED</span>
+        </div>
+
+        <div class="node">
+          <div class="node-title editable">Events + Money Movement</div>
+          <ul>
+            <li class="editable">Transaction webhooks</li>
+            <li class="editable">Wallet transfers / goal allocation</li>
+            <li class="editable">Payment status and reconciliation</li>
+          </ul>
+          <span class="tag t-baas">API</span><span class="tag t-back">CARTWISE INTEGRATION</span>
+        </div>
+
+        <div class="boundary editable"><b>Hackathon implementation:</b> simulate these APIs or use a BaaS sandbox. Do not recreate ledger, KYC, AML, card-network, or banking-compliance logic.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="user" class="view">
+  <div class="notice"><b>User-experience cycle:</b> this is the demo story your team can build and pitch end-to-end.</div>
+  <div class="flow">
+    <div class="step"><div class="num">1</div><h3 class="editable">Set a Goal</h3><p class="editable">“Save $600 for a holiday.”</p><div class="mini editable">Creates motivation before showing banking features.</div></div>
+    <div class="step"><div class="num">2</div><h3 class="editable">Set Grocery Budget</h3><p class="editable">$120/week and choose what happens to underspend.</p><div class="mini editable">CartWise stores budget rule.</div></div>
+    <div class="step"><div class="num">3</div><h3 class="editable">Create Grocery Wallet</h3><p class="editable">CartWise requests wallet/card creation through the BaaS provider.</p><div class="mini editable">BaaS handles regulated account infrastructure.</div></div>
+    <div class="step"><div class="num">4</div><h3 class="editable">Build Basket</h3><p class="editable">Milk, chicken, rice, eggs, vegetables, etc.</p><div class="mini editable">Basket becomes optimisation input.</div></div>
+    <div class="step"><div class="num">5</div><h3 class="editable">Optimise Shop</h3><p class="editable">CartWise compares stores, specials, travel cost and travel time.</p><div class="mini editable">Example: $120 → $103 recommended.</div></div>
+    <div class="step"><div class="num">6</div><h3 class="editable">Pay with CartWise</h3><p class="editable">User shops with their grocery card.</p><div class="mini editable">MCC / spending limits can enforce purpose.</div></div>
+    <div class="step"><div class="num">7</div><h3 class="editable">Track Automatically</h3><p class="editable">Transaction webhook updates live grocery spending.</p><div class="mini editable">Optional receipt adds item-level verification.</div></div>
+    <div class="step"><div class="num">8</div><h3 class="editable">Calculate Underspend</h3><p class="editable">$120 budget − $103 spent = $17 available.</p><div class="mini editable">Savings engine applies the user's rule.</div></div>
+    <div class="step"><div class="num">9</div><h3 class="editable">Move Toward Goal</h3><p class="editable">Allocate $17 to the user's chosen goal or keep it as grocery buffer.</p><div class="mini editable">Goal progress and projections update.</div></div>
+    <div class="step"><div class="num">10</div><h3 class="editable">Repeat Weekly</h3><p class="editable">The behaviour loop repeats every grocery cycle.</p><div class="mini editable">Everyday savings compound into visible financial progress.</div></div>
+  </div>
+</section>
+
+<section id="architecture" class="view">
+  <div class="notice"><b>System boundary:</b> this is the clean technical explanation for judges and engineers.</div>
+  <div class="architecture">
+    <div class="arch-col frontend">
+      <h3>CartWise Client</h3>
+      <div class="node"><div class="node-title editable">Web / Mobile UI</div><div class="editable">Goals, budgets, basket builder, optimiser results, wallet, card, spending feed, receipt upload, savings dashboard.</div></div>
+      <div class="node"><div class="node-title editable">Client responsibilities</div><div class="editable">Display state, validate user input, invoke backend APIs, receive live updates.</div></div>
+    </div>
+    <div class="arrow">⇄</div>
+    <div class="arch-col backend">
+      <h3>CartWise Backend</h3>
+      <div class="node"><div class="node-title editable">Product API</div><div class="editable">Users, goals, budgets, baskets, optimisation, transactions, savings and notifications.</div></div>
+      <div class="node"><div class="node-title editable">Business Logic</div><div class="editable">Optimisation engine, underspend logic, goal allocation rules, receipt intelligence.</div></div>
+      <div class="node"><div class="node-title editable">Persistence</div><div class="editable">Store application state and references to external BaaS accounts/cards/transactions.</div></div>
+    </div>
+    <div class="arrow">⇄</div>
+    <div class="arch-col baas">
+      <h3>Licensed BaaS Provider</h3>
+      <div class="node"><div class="node-title editable">Financial Infrastructure</div><div class="editable">Accounts/wallets, ledger, card issuing, payment processing, transaction events, card controls.</div></div>
+      <div class="node"><div class="node-title editable">Regulated Responsibilities</div><div class="editable">KYC, AML, compliance and underlying banking/payment infrastructure.</div></div>
+      <div class="boundary editable"><b>Important:</b> CartWise orchestrates and presents these capabilities; it does not implement the regulated banking core.</div>
+    </div>
+  </div>
+  <div class="footer-note editable">Suggested hackathon split: Front-end engineer → screens/state; Back-end engineer → product API + data + optimisation; Integration engineer → BaaS sandbox/mock + webhooks; optional CV/AI engineer → receipt OCR and item matching.</div>
+</section>
+</main>
+
+<script>
+const tabs=[...document.querySelectorAll('.tab')];
+const views=[...document.querySelectorAll('.view')];
+tabs.forEach(t=>t.onclick=()=>{
+  tabs.forEach(x=>x.classList.remove('active')); views.forEach(v=>v.classList.remove('active'));
+  t.classList.add('active'); document.getElementById(t.dataset.target).classList.add('active');
+});
+let editing=false;
+const editBtn=document.getElementById('editBtn');
+function setEdit(on){
+  editing=on; document.body.classList.toggle('editmode',on);
+  document.querySelectorAll('.editable').forEach(el=>el.contentEditable=on);
+  editBtn.textContent=on?'Disable editing':'Enable editing';
+}
+editBtn.onclick=()=>setEdit(!editing);
+
+function snapshot(){
+  return [...document.querySelectorAll('.editable')].map((el,i)=>({i,html:el.innerHTML}));
+}
+function restore(data){
+  const els=[...document.querySelectorAll('.editable')];
+  data.forEach(x=>{ if(els[x.i]) els[x.i].innerHTML=x.html; });
+}
+document.getElementById('saveBtn').onclick=()=>{
+  localStorage.setItem('cartwiseMindmap',JSON.stringify(snapshot()));
+  alert('Saved in this browser.');
+};
+document.getElementById('exportBtn').onclick=()=>{
+  const blob=new Blob([JSON.stringify(snapshot(),null,2)],{type:'application/json'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='cartwise-mindmap.json'; a.click();
+  URL.revokeObjectURL(a.href);
+};
+document.getElementById('importFile').onchange=e=>{
+  const f=e.target.files[0]; if(!f)return;
+  const r=new FileReader(); r.onload=()=>{try{restore(JSON.parse(r.result));}catch{alert('Invalid mind-map JSON.')}}; r.readAsText(f);
+};
+document.getElementById('resetBtn').onclick=()=>{
+  if(confirm('Reset all edits to the original mind-map?')){ localStorage.removeItem('cartwiseMindmap'); location.reload(); }
+};
+const saved=localStorage.getItem('cartwiseMindmap');
+if(saved){ try{restore(JSON.parse(saved));}catch{} }
+</script>
+</body>
+</html>
