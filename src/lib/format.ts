@@ -15,3 +15,15 @@ export function formatDate(isoDate: string): string {
     year: 'numeric',
   })
 }
+
+export function isInCurrentMonth(
+  isoTimestamp: string,
+  referenceDate = new Date(),
+): boolean {
+  const date = new Date(isoTimestamp)
+  return (
+    !Number.isNaN(date.getTime()) &&
+    date.getFullYear() === referenceDate.getFullYear() &&
+    date.getMonth() === referenceDate.getMonth()
+  )
+}

@@ -31,6 +31,41 @@ export type SavedTripPlan = {
   saved: number
 }
 
+export type SavingsTransfer = {
+  id: string
+  paidAt: string
+  storeNames: string
+  itemCount: number
+  amountSpent: number
+  amountSaved: number
+}
+
+export type PaymentResult =
+  | 'completed'
+  | 'already-paid'
+  | 'insufficient-funds'
+  | 'trip-not-found'
+  | 'weekly-budget-used'
+
+function roundMoney(value: number) {
+  return Math.round(value * 100) / 100
+}
+
+export function calculateBudgetSavings(weeklyBudget: number, amountSpent: number) {
+  if (!Number.isFinite(weeklyBudget) || !Number.isFinite(amountSpent)) return 0
+  return roundMoney(Math.max(weeklyBudget - amountSpent, 0))
+}
+
+function getLocalWeekKey(date = new Date()) {
+  const monday = new Date(date.getFullYear(), date.getMonth(), date.getDate())
+  const daysSinceMonday = (monday.getDay() + 6) % 7
+  monday.setDate(monday.getDate() - daysSinceMonday)
+  const year = monday.getFullYear()
+  const month = String(monday.getMonth() + 1).padStart(2, '0')
+  const day = String(monday.getDate()).padStart(2, '0')
+  return `${year}-${month}-${day}`
+}
+
 type AppState = {
   suburb: string
   transport: Transport
@@ -46,6 +81,11 @@ type AppState = {
   maxStores: number
   dietNeeds: DietNeed[]
   savedTrips: SavedTripPlan[]
+  walletBalance: number
+  savingsBalance: number
+  paidTripIds: string[]
+  budgetSettlementWeek: string | null
+  savingsTransfers: SavingsTransfer[]
   setSuburb: (suburb: string) => void
   setTransport: (transport: Transport) => void
   setLitresPer100km: (litres: number) => void
@@ -66,6 +106,8 @@ type AppState = {
   toggleDietNeed: (need: DietNeed) => void
   saveTrip: (trip: SavedTripPlan) => void
   removeSavedTrip: (id: string) => void
+  topUpWallet: (amount: number) => void
+  completeTripPayment: (tripId: string) => PaymentResult
   resetDemo: () => void
 }
 
@@ -74,8 +116,8 @@ const defaultState = {
   transport: 'car' as Transport,
   litresPer100km: 8,
   timeValuePerHour: 22,
-  weeklyBudget: 220,
-  goal: demoSavings.goal,
+  weeklyBudget: 100,
+  goal: { ...demoSavings.goal, name: 'AC/DC Concert', current: 0 },
   basket: demoBasketLines,
   tripList: [] as BasketItem[],
   optimiseMode: 'both' as OptimiseMode,
@@ -84,11 +126,16 @@ const defaultState = {
   maxStores: 3,
   dietNeeds: [] as DietNeed[],
   savedTrips: [] as SavedTripPlan[],
+  walletBalance: 426.8,
+  savingsBalance: 0,
+  paidTripIds: [] as string[],
+  budgetSettlementWeek: null as string | null,
+  savingsTransfers: [] as SavingsTransfer[],
 }
 
 export const useApp = create<AppState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       ...defaultState,
       setSuburb: (suburb) => set({ suburb }),
       setTransport: (transport) => set({ transport }),
@@ -180,8 +227,74 @@ export const useApp = create<AppState>()(
         set((state) => ({
           savedTrips: state.savedTrips.filter((trip) => trip.id !== id),
         })),
+      topUpWallet: (amount) => {
+        if (!Number.isFinite(amount) || amount <= 0) return
+        set((state) => ({
+          walletBalance: roundMoney(state.walletBalance + amount),
+        }))
+      },
+      completeTripPayment: (tripId) => {
+        const state = get()
+        if (state.paidTripIds.includes(tripId)) return 'already-paid'
+
+        const trip = state.savedTrips.find((savedTrip) => savedTrip.id === tripId)
+        if (!trip || !Number.isFinite(trip.total) || trip.total < 0) {
+          return 'trip-not-found'
+        }
+
+        const currentWeek = getLocalWeekKey()
+        if (state.budgetSettlementWeek === currentWeek) {
+          return 'weekly-budget-used'
+        }
+
+        const spent = roundMoney(trip.total)
+        const savings = calculateBudgetSavings(state.weeklyBudget, spent)
+        const allocatedFromWallet = roundMoney(spent + savings)
+        if (state.walletBalance < allocatedFromWallet) {
+          return 'insufficient-funds'
+        }
+
+        const updatedSavings = roundMoney(state.savingsBalance + savings)
+        const transfer: SavingsTransfer = {
+          id: `transfer-${tripId}`,
+          paidAt: new Date().toISOString(),
+          storeNames: trip.stores.map((store) => store.name).join(' + '),
+          itemCount: trip.itemCount,
+          amountSpent: spent,
+          amountSaved: savings,
+        }
+
+        set({
+          walletBalance: roundMoney(state.walletBalance - allocatedFromWallet),
+          savingsBalance: updatedSavings,
+          goal: { ...state.goal, current: updatedSavings },
+          paidTripIds: [...state.paidTripIds, tripId],
+          budgetSettlementWeek: currentWeek,
+          savingsTransfers: [transfer, ...state.savingsTransfers],
+        })
+        return 'completed'
+      },
       resetDemo: () => set(defaultState),
     }),
-    { name: 'cloverpriced-app' },
+    {
+      name: 'cloverpriced-app',
+      version: 2,
+      migrate: (persistedState, version) => {
+        const state = persistedState as Partial<AppState>
+        if (version < 2) {
+          return {
+            ...state,
+            weeklyBudget: 100,
+            goal: { ...demoSavings.goal, name: 'AC/DC Concert', current: 0 },
+            walletBalance: 426.8,
+            savingsBalance: 0,
+            paidTripIds: [],
+            budgetSettlementWeek: null,
+            savingsTransfers: [],
+          } as AppState
+        }
+        return state as AppState
+      },
+    },
   ),
 )
