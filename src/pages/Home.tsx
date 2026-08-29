@@ -14,17 +14,24 @@ export function Home() {
         <BrandLockup />
         <Link
           aria-label="Open profile"
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-ink text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+          className="glass-panel flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border-ink text-ink hover:border-forest hover:text-forest focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
           to="/profile"
         >
           <User size={20} strokeWidth={1.75} />
         </Link>
       </div>
 
-      <SavingsBasket
-        className="mx-auto mt-6"
-        summary={`${formatCurrency(demoSavings.allTimeSaved)} saved. ${demoSavings.equivalenceLine}.`}
-      />
+      <div className="glass-panel relative mx-auto mt-6 flex h-[278px] w-full max-w-[330px] items-center justify-center overflow-hidden rounded-[2rem]">
+        <div className="accent-orb-lime floating-orb absolute left-4 top-5 h-12 w-12 rounded-full blur-xl" />
+        <div className="accent-orb-forest absolute bottom-5 right-7 h-20 w-20 rounded-full blur-2xl" />
+        <SavingsBasket
+          className="relative z-[1]"
+          summary={`${formatCurrency(demoSavings.allTimeSaved)} saved. ${demoSavings.equivalenceLine}.`}
+        />
+        <span className="savings-badge absolute bottom-4 left-1/2 z-[2] -translate-x-1/2 rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-forest backdrop-blur">
+          Your savings orbit
+        </span>
+      </div>
 
       <HeroFigure className="mt-6 text-center">
         {formatCurrency(demoSavings.allTimeSaved)}
@@ -36,7 +43,7 @@ export function Home() {
         {demoSavings.equivalenceLine}
       </p>
 
-      <div className="mt-8 border-t border-rule">
+      <div className="glass-panel mt-8 overflow-hidden rounded-2xl px-4">
         <div className="border-b border-rule py-4">
           <SectionLabel>My goal</SectionLabel>
           <div className="mt-3">

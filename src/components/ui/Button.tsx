@@ -5,8 +5,8 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
 }
 
 const variants = {
-  primary: 'border-forest bg-forest text-paper',
-  secondary: 'border-ink bg-transparent text-ink',
+  primary: 'border-forest bg-forest text-ink',
+  secondary: 'border-ink bg-transparent text-ink hover:bg-sunk',
 }
 
 export function Button({
@@ -19,7 +19,7 @@ export function Button({
     <button
       type={type}
       className={[
-        'min-h-11 rounded-xl border px-5 py-3 text-base font-bold',
+        'app-button min-h-11 rounded-xl border px-5 py-3 text-base font-bold',
         'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest',
         'disabled:cursor-not-allowed disabled:opacity-40',
         variants[variant],

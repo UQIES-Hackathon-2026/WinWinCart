@@ -15,7 +15,7 @@ export function Trip() {
 
       <section className="mt-8">
         <SectionLabel>Your location</SectionLabel>
-        <div className="mt-3 flex h-36 items-center justify-center bg-sunk">
+        <div className="glass-panel mt-3 flex h-36 items-center justify-center overflow-hidden rounded-2xl">
           <div className="text-center">
             <MapPin
               aria-hidden="true"
@@ -35,12 +35,12 @@ export function Trip() {
           {demoPromos.map((promo) => (
             <li
               key={promo.id}
-              className="border-b border-rule py-4 last:border-b-0"
+              className="group border-b border-rule py-4 transition-colors hover:bg-sunk last:border-b-0"
             >
               <div className="flex items-start gap-3">
                 <Tag
                   aria-hidden="true"
-                  className="mt-0.5 shrink-0 text-mute"
+                  className="mt-0.5 shrink-0 text-mute transition-colors group-hover:text-forest"
                   size={20}
                   strokeWidth={1.75}
                 />

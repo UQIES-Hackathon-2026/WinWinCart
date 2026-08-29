@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { PhoneFrame } from './components/PhoneFrame'
 import { StartTripCta } from './components/StartTripCta'
@@ -11,6 +12,7 @@ import { Profile } from './pages/Profile'
 import { Results } from './pages/Results'
 import { Savings } from './pages/Savings'
 import { Trip } from './pages/Trip'
+import { useApp } from './store/useApp'
 
 const tabBarHiddenPaths = new Set([
   '/profile',
@@ -22,17 +24,23 @@ const tabBarHiddenPaths = new Set([
 
 export default function App() {
   const location = useLocation()
+  const theme = useApp((state) => state.theme)
   const showTabBar = !tabBarHiddenPaths.has(location.pathname)
   const showStartTripCta =
     location.pathname === '/home' || location.pathname === '/trip'
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+  }, [theme])
 
   return (
     <PhoneFrame>
       <main
         className={[
-          'scrollbar-hide min-h-0 flex-1 overflow-y-auto',
+          'page-stage scrollbar-hide min-h-0 flex-1 overflow-y-auto',
           showTabBar ? 'pb-16' : '',
         ].join(' ')}
+        key={location.pathname}
       >
         <Routes>
           <Route element={<Navigate replace to="/home" />} path="/" />

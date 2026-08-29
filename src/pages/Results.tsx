@@ -27,7 +27,7 @@ export function Results() {
 
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Results</h1>
 
-      <section className="mt-8 min-h-[320px]">
+      <section className="hero-surface glass-panel mt-8 min-h-[320px] rounded-3xl p-5">
         <p className="text-2xl font-bold">{topStore?.name}</p>
         <p className="tnum mt-4 text-[32px] font-bold leading-none">
           {formatCurrency(topPick.total)}

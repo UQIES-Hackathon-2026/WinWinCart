@@ -17,10 +17,10 @@ export function GoalProgress({ name, current, target }: GoalProgressProps) {
       </div>
       <div
         aria-hidden="true"
-        className="mt-3 h-2 w-full overflow-hidden bg-rule"
+        className="progress-track mt-3 h-2 w-full overflow-hidden bg-rule"
       >
         <div
-          className="h-full bg-lime transition-[width] duration-[400ms] ease-[var(--ease-refined)] motion-reduce:transition-none"
+          className="progress-fill h-full bg-lime transition-[width] duration-[700ms] ease-[var(--ease-refined)] motion-reduce:transition-none"
           style={{ width: `${progress * 100}%` }}
         />
       </div>

@@ -26,14 +26,14 @@ export function TabBar() {
   return (
     <nav
       aria-label="Primary navigation"
-      className="absolute inset-x-0 bottom-0 z-20 grid h-16 grid-cols-5 border-t border-rule bg-paper"
+      className="tab-bar absolute inset-x-0 bottom-0 z-20 grid h-16 grid-cols-5 border-t border-rule"
     >
       {tabs.map(({ icon: Icon, label, path }) => (
         <NavLink
           key={path}
           className={({ isActive }) =>
             [
-              'flex min-w-11 flex-col items-center justify-center gap-1 text-[11px] font-semibold',
+              'tab-link relative flex min-w-11 flex-col items-center justify-center gap-1 text-[11px] font-semibold',
               'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-forest',
               isActive ? 'text-forest' : 'text-mute',
             ].join(' ')

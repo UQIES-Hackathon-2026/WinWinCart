@@ -1,6 +1,7 @@
 import { ArrowLeft, Bus, Car, Footprints } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Button, SectionLabel } from '../components/ui'
+import { ThemePicker } from '../components/ThemePicker'
 import { useApp, type Transport } from '../store/useApp'
 
 const transportOptions: {
@@ -16,6 +17,7 @@ const transportOptions: {
 export function Profile() {
   const navigate = useNavigate()
   const suburb = useApp((state) => state.suburb)
+  const theme = useApp((state) => state.theme)
   const transport = useApp((state) => state.transport)
   const litresPer100km = useApp((state) => state.litresPer100km)
   const timeValuePerHour = useApp((state) => state.timeValuePerHour)
@@ -26,6 +28,7 @@ export function Profile() {
   const setTimeValuePerHour = useApp((state) => state.setTimeValuePerHour)
   const setWeeklyBudget = useApp((state) => state.setWeeklyBudget)
   const setGoal = useApp((state) => state.setGoal)
+  const setTheme = useApp((state) => state.setTheme)
   const resetDemo = useApp((state) => state.resetDemo)
 
   return (
@@ -40,6 +43,10 @@ export function Profile() {
       </button>
 
       <h1 className="mt-6 text-2xl font-bold tracking-tight">Profile</h1>
+
+      <section className="glass-panel mt-8 rounded-2xl p-4">
+        <ThemePicker onChange={setTheme} value={theme} />
+      </section>
 
       <section className="mt-8">
         <SectionLabel>About you</SectionLabel>

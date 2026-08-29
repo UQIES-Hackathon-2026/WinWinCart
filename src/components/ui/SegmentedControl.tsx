@@ -19,7 +19,7 @@ export function SegmentedControl<T extends string>({
   return (
     <div
       aria-label={label}
-      className="flex min-h-11 overflow-hidden rounded-xl border border-ink"
+      className="glass-panel flex min-h-11 overflow-hidden rounded-xl border border-ink"
       role="group"
     >
       {options.map((option) => {
@@ -32,7 +32,9 @@ export function SegmentedControl<T extends string>({
             className={[
               'min-h-11 flex-1 px-3 text-sm font-semibold',
               'focus-visible:relative focus-visible:z-10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-ink',
-              selected ? 'bg-lime text-ink' : 'bg-paper text-ink',
+              selected
+                ? 'bg-lime text-ink shadow-[inset_0_-2px_0_var(--forest)]'
+                : 'bg-transparent text-ink hover:bg-sunk',
             ].join(' ')}
             onClick={() => onChange(option.value)}
             type="button"

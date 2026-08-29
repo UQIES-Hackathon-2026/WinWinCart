@@ -12,7 +12,7 @@ export function QuantityStepper({ qty, onChange }: QuantityStepperProps) {
     <div className="flex items-center gap-2">
       <button
         aria-label="Decrease quantity"
-        className="flex h-11 w-11 items-center justify-center rounded-xl border border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+        className="control-button flex h-11 w-11 items-center justify-center rounded-xl border border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
         onClick={() => onChange(Math.max(0, qty - 1))}
         type="button"
       >
@@ -23,7 +23,7 @@ export function QuantityStepper({ qty, onChange }: QuantityStepperProps) {
       </span>
       <button
         aria-label="Increase quantity"
-        className="flex h-11 w-11 items-center justify-center rounded-xl border border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
+        className="control-button flex h-11 w-11 items-center justify-center rounded-xl border border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
         onClick={() => onChange(qty + 1)}
         type="button"
       >
@@ -51,9 +51,11 @@ export function ProductLineRow({
   const benchmark = getBenchmarkPrice(product)
 
   return (
-    <div className="flex min-h-11 items-center justify-between gap-4 border-b border-rule py-3">
+    <div className="group flex min-h-11 items-center justify-between gap-4 border-b border-rule py-3 transition-colors hover:bg-sunk">
       <div className="min-w-0 flex-1">
-        <p className="text-[15px] font-semibold">{product.name}</p>
+        <p className="text-[15px] font-semibold transition-colors group-hover:text-forest">
+          {product.name}
+        </p>
         <p className="text-[13px] text-mute">{product.unit}</p>
       </div>
       <div className="flex shrink-0 items-center gap-4">

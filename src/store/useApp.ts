@@ -4,6 +4,27 @@ import { demoBasketLines, demoSavings } from '../data/demo'
 
 export type Transport = 'car' | 'bus' | 'walk'
 export type OptimiseMode = 'price' | 'time' | 'both'
+export type Theme =
+  | 'solarized-light'
+  | 'solarized-dark'
+  | 'catppuccin-latte'
+  | 'catppuccin-mocha'
+  | 'gruvbox-light'
+  | 'gruvbox-dark'
+  | 'nord-light'
+  | 'nord-dark'
+  | 'tokyo-night'
+  | 'one-dark'
+  | 'dracula'
+  | 'rose-pine'
+  | 'rose-pine-dawn'
+  | 'ayu-light'
+  | 'ayu-dark'
+  | 'monokai'
+  | 'high-contrast'
+  | 'oceanic'
+  | 'forest-night'
+  | 'cyberpunk'
 
 export type BasketItem = {
   productId: string
@@ -20,6 +41,7 @@ type AppState = {
   basket: BasketItem[]
   tripList: BasketItem[]
   optimiseMode: OptimiseMode
+  theme: Theme
   setSuburb: (suburb: string) => void
   setTransport: (transport: Transport) => void
   setLitresPer100km: (litres: number) => void
@@ -27,6 +49,7 @@ type AppState = {
   setWeeklyBudget: (budget: number) => void
   setGoal: (goal: { name: string; target: number; current: number }) => void
   setOptimiseMode: (mode: OptimiseMode) => void
+  setTheme: (theme: Theme) => void
   setBasketQty: (productId: string, qty: number) => void
   addToTripList: (productId: string) => void
   removeFromTripList: (productId: string) => void
@@ -44,6 +67,7 @@ const defaultState = {
   basket: demoBasketLines,
   tripList: [] as BasketItem[],
   optimiseMode: 'both' as OptimiseMode,
+  theme: 'catppuccin-latte' as Theme,
 }
 
 export const useApp = create<AppState>()(
@@ -57,6 +81,7 @@ export const useApp = create<AppState>()(
       setWeeklyBudget: (weeklyBudget) => set({ weeklyBudget }),
       setGoal: (goal) => set({ goal }),
       setOptimiseMode: (optimiseMode) => set({ optimiseMode }),
+      setTheme: (theme) => set({ theme }),
       setBasketQty: (productId, qty) =>
         set((state) => ({
           basket:

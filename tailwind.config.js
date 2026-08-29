@@ -4,13 +4,13 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: '#000000',
-        paper: '#FFFFFF',
-        forest: '#084E46',
-        lime: '#91EF5B',
-        rule: '#E5E5E5',
-        mute: '#6B6B6B',
-        sunk: '#FAFAFA',
+        ink: 'var(--ink)',
+        paper: 'var(--paper)',
+        forest: 'var(--forest)',
+        lime: 'var(--lime)',
+        rule: 'var(--rule)',
+        mute: 'var(--mute)',
+        sunk: 'var(--sunk)',
       },
       fontFamily: {
         sans: ['Assistant', 'sans-serif'],
