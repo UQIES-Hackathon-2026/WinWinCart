@@ -1,8 +1,7 @@
 import {
   Home,
-  List,
-  MapPin,
   PiggyBank,
+  ShoppingBasket,
   WalletCards,
   type LucideIcon,
 } from 'lucide-react'
@@ -16,8 +15,7 @@ type Tab = {
 
 const tabs: Tab[] = [
   { label: 'Home', path: '/home', icon: Home },
-  { label: 'Trip', path: '/trip', icon: MapPin },
-  { label: 'My list', path: '/list', icon: List },
+  { label: 'Shop', path: '/shop', icon: ShoppingBasket },
   { label: 'Wallet', path: '/wallet', icon: WalletCards },
   { label: 'Savings', path: '/savings', icon: PiggyBank },
 ]
@@ -26,7 +24,7 @@ export function TabBar() {
   return (
     <nav
       aria-label="Primary navigation"
-      className="absolute inset-x-0 bottom-0 z-20 grid h-16 grid-cols-5 border-t border-rule bg-paper"
+      className="absolute inset-x-0 bottom-0 z-20 grid h-16 grid-cols-4 border-t border-rule bg-paper"
     >
       {tabs.map(({ icon: Icon, label, path }) => (
         <NavLink

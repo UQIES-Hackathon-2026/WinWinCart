@@ -72,7 +72,7 @@ export const stores: Store[] = [
   },
   {
     id: 'yuens-sunnybank',
-    name: "Yuen's Market",
+    name: 'Sunlit Asian Supermarket',
     chain: 'independent',
     suburb: 'Sunnybank',
     distanceKm: 13.8,
