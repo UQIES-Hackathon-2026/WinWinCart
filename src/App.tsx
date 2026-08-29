@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { PhoneFrame } from './components/PhoneFrame'
+import { StartTripCta } from './components/StartTripCta'
 import { TabBar } from './components/TabBar'
 import { Basket } from './pages/Basket'
 import { CreateTrip } from './pages/CreateTrip'
@@ -22,6 +23,8 @@ const tabBarHiddenPaths = new Set([
 export default function App() {
   const location = useLocation()
   const showTabBar = !tabBarHiddenPaths.has(location.pathname)
+  const showStartTripCta =
+    location.pathname === '/home' || location.pathname === '/trip'
 
   return (
     <PhoneFrame>
@@ -46,6 +49,7 @@ export default function App() {
           <Route element={<Navigate replace to="/home" />} path="*" />
         </Routes>
       </main>
+      {showStartTripCta && <StartTripCta />}
       {showTabBar && <TabBar />}
     </PhoneFrame>
   )

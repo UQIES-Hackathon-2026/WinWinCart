@@ -22,7 +22,7 @@ const PAPER = '#FFFFFF'
 const MILK_COUNT = 5
 const DROP_STAGGER = 0.08
 const LOCKED_POLAR = 1.05
-const CANVAS_HEIGHT = 320
+const CANVAS_SIZE = 228
 
 const HANDLE_POS = new QuadraticBezierCurve3(
   new Vector3(-0.52, 0.5, 0.6),
@@ -263,11 +263,9 @@ function DroppingMilk({
 }
 
 function AmbientControls({ reducedMotion }: { reducedMotion: boolean }) {
-  const [spinning, setSpinning] = useState(!reducedMotion)
-
   return (
     <OrbitControls
-      autoRotate={spinning}
+      autoRotate={!reducedMotion}
       autoRotateSpeed={0.45}
       dampingFactor={0.08}
       enableDamping
@@ -275,7 +273,6 @@ function AmbientControls({ reducedMotion }: { reducedMotion: boolean }) {
       enableZoom={false}
       maxPolarAngle={LOCKED_POLAR}
       minPolarAngle={LOCKED_POLAR}
-      onStart={() => setSpinning(false)}
       target={[0, 0.12, 0]}
     />
   )
@@ -350,13 +347,18 @@ class WebGLErrorBoundary extends Component<BoundaryProps, BoundaryState> {
 }
 
 function BasketPlaceholder() {
-  return <div className="h-[320px] w-full bg-paper" />
+  return (
+    <div className="bg-paper" style={{ height: CANVAS_SIZE, width: CANVAS_SIZE }} />
+  )
 }
 
 function BasketFallback({ summary }: { summary: string }) {
   return (
-    <div className="flex h-[320px] w-full items-center justify-center px-5">
-      <p className="text-center text-base text-mute">{summary}</p>
+    <div
+      className="flex items-center justify-center px-2"
+      style={{ height: CANVAS_SIZE, width: CANVAS_SIZE }}
+    >
+      <p className="text-center text-xs text-mute">{summary}</p>
     </div>
   )
 }
@@ -379,9 +381,9 @@ export function SavingsBasket({ className = '', summary }: SavingsBasketProps) {
   return (
     <div
       aria-label="Lime shopping basket with five milk cartons"
-      className={['h-[320px] w-full touch-none', className].join(' ')}
+      className={['touch-none', className].join(' ')}
       role="img"
-      style={{ height: CANVAS_HEIGHT }}
+      style={{ height: CANVAS_SIZE, width: CANVAS_SIZE }}
     >
       <WebGLErrorBoundary fallback={<BasketFallback summary={summary} />}>
         <Suspense fallback={<BasketPlaceholder />}>

@@ -277,9 +277,7 @@ Savings language stays specific. "You saved $12.40 against Coles/Woolworths aver
 Three moments, nothing else.
 - Basket ambient spin until first touch
 - Items dropping into the basket after a trip is logged, staggered 80ms, spring settle
-- Goal bar filling on the savings screen, 400ms
-
-Use the custom ease-out curve `cubic-bezier(0.23, 1, 0.32, 1)` for every timed UI animation so movement feels controlled and refined. Do not use browser-default easing curves. The basket item settle remains spring-based because it represents physical motion.
+- Goal bar filling on the savings screen, 400ms ease-out
 
 No page transitions, no skeleton shimmer, no hover flourishes. Everything respects `prefers-reduced-motion`.
 
