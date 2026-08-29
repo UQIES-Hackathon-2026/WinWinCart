@@ -134,79 +134,6 @@ export function Shop() {
               )}
             </ul>
           )}
-
-          <div className="mt-3 flex flex-wrap gap-2">
-            {CATEGORY_META.map((category) => (
-              <button
-                key={category.id}
-                className="flex items-center gap-1.5 rounded-xl border border-rule bg-paper px-3.5 py-2.5 text-[13px] font-semibold"
-                onClick={() => setOpenCategory(category.id)}
-                type="button"
-              >
-                <span aria-hidden="true">{category.emoji}</span>
-                {category.label}
-              </button>
-            ))}
-          </div>
-        </section>
-
-        {/* Your list */}
-        <section className="mt-5 rounded-2xl border border-rule bg-paper p-4">
-          <p className="text-[15px] font-semibold">
-            {itemCount === 0
-              ? 'No items yet'
-              : `${itemCount} item${itemCount === 1 ? '' : 's'}`}
-          </p>
-          {shopCart.length === 0 ? (
-            <p className="mt-2 text-[13px] text-mute">
-              Search or pick a category to start your list.
-            </p>
-          ) : (
-            <ul className="mt-3 space-y-2">
-              {shopCart.map((line) => (
-                <li
-                  key={line.id}
-                  className="flex items-center gap-3 rounded-xl bg-cream px-3 py-2.5"
-                >
-                  <span aria-hidden="true" className="text-xl">
-                    {line.emoji}
-                  </span>
-                  <span className="min-w-0 flex-1 truncate text-[15px] font-semibold">
-                    {line.name}
-                  </span>
-                  <div className="flex items-center gap-1.5">
-                    <button
-                      aria-label={`Decrease ${line.name}`}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-rule bg-paper"
-                      onClick={() => setCartQty(line.id, line.qty - 1)}
-                      type="button"
-                    >
-                      <Minus size={15} strokeWidth={2} />
-                    </button>
-                    <span className="tnum w-5 text-center text-[15px] font-semibold">
-                      {line.qty}
-                    </span>
-                    <button
-                      aria-label={`Increase ${line.name}`}
-                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-rule bg-paper"
-                      onClick={() => setCartQty(line.id, line.qty + 1)}
-                      type="button"
-                    >
-                      <Plus size={15} strokeWidth={2} />
-                    </button>
-                  </div>
-                  <button
-                    aria-label={`Remove ${line.name}`}
-                    className="flex h-8 w-8 items-center justify-center text-mute"
-                    onClick={() => removeCartItem(line.id)}
-                    type="button"
-                  >
-                    <Trash2 size={17} strokeWidth={1.75} />
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
         </section>
 
         {/* Filters */}
@@ -327,6 +254,79 @@ export function Shop() {
                 </p>
               </div>
             </div>
+          )}
+        </section>
+
+        <div className="mt-3 flex flex-wrap gap-2">
+          {CATEGORY_META.map((category) => (
+            <button
+              key={category.id}
+              className="flex items-center gap-1.5 rounded-xl border border-rule bg-paper px-3.5 py-2.5 text-[13px] font-semibold"
+              onClick={() => setOpenCategory(category.id)}
+              type="button"
+            >
+              <span aria-hidden="true">{category.emoji}</span>
+              {category.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Your list */}
+        <section className="mt-5 rounded-2xl border border-rule bg-paper p-4">
+          <p className="text-[15px] font-semibold">
+            {itemCount === 0
+              ? 'No items yet'
+              : `${itemCount} item${itemCount === 1 ? '' : 's'}`}
+          </p>
+          {shopCart.length === 0 ? (
+            <p className="mt-2 text-[13px] text-mute">
+              Search or pick a category to start your list.
+            </p>
+          ) : (
+            <ul className="mt-3 space-y-2">
+              {shopCart.map((line) => (
+                <li
+                  key={line.id}
+                  className="flex items-center gap-3 rounded-xl bg-sunk px-3 py-2.5"
+                >
+                  <span aria-hidden="true" className="text-xl">
+                    {line.emoji}
+                  </span>
+                  <span className="min-w-0 flex-1 truncate text-[15px] font-semibold">
+                    {line.name}
+                  </span>
+                  <div className="flex items-center gap-1.5">
+                    <button
+                      aria-label={`Decrease ${line.name}`}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-rule bg-paper"
+                      onClick={() => setCartQty(line.id, line.qty - 1)}
+                      type="button"
+                    >
+                      <Minus size={15} strokeWidth={2} />
+                    </button>
+                    <span className="tnum w-5 text-center text-[15px] font-semibold">
+                      {line.qty}
+                    </span>
+                    <button
+                      aria-label={`Increase ${line.name}`}
+                      className="flex h-8 w-8 items-center justify-center rounded-lg border border-rule bg-paper"
+                      onClick={() => setCartQty(line.id, line.qty + 1)}
+                      type="button"
+                    >
+                      <Plus size={15} strokeWidth={2} />
+                    </button>
+                  </div>
+                  <button
+                    aria-label={`Remove ${line.name}`}
+                    className="flex h-8 w-8 items-center justify-center text-mute"
+                    onClick={() => removeCartItem(line.id)}
+                    type="button"
+                  >
+                    <Trash2 size={17} strokeWidth={1.75} />
+                  </button>
+                </li>
+              ))}
+            </ul>
           )}
         </section>
       </div>
