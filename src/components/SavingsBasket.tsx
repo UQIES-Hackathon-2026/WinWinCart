@@ -19,7 +19,7 @@ const LIME = '#91EF5B'
 const FOREST = '#084E46'
 const PAPER = '#FFFFFF'
 
-const MILK_COUNT = 5
+const MILK_COUNT = 7
 const DROP_STAGGER = 0.08
 const LOCKED_POLAR = 1.05
 const CANVAS_SIZE = 228
@@ -48,6 +48,8 @@ function milkPose(index: number) {
     [0.04, 0.16],
     [-0.12, -0.17],
     [0.21, 0.07],
+    [-0.05, -0.05],
+    [0.1, -0.12],
   ]
   const [sx, sz] = slots[index]
   return {
@@ -380,7 +382,7 @@ export function SavingsBasket({ className = '', summary }: SavingsBasketProps) {
 
   return (
     <div
-      aria-label="Lime shopping basket with five milk cartons"
+      aria-label="Lime shopping basket with seven milk cartons"
       className={['touch-none', className].join(' ')}
       role="img"
       style={{ height: CANVAS_SIZE, width: CANVAS_SIZE }}

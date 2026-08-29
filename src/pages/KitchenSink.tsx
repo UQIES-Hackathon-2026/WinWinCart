@@ -70,7 +70,7 @@ export function KitchenSink() {
         <div className="mt-3">
           <StatRow label="This month saved" value="$31.40" />
           <StatRow label="This month spent" value="$184.60" />
-          <StatRow label="Last trip saved" value="$12.80" />
+          <StatRow label="Last shop saved" value="$12.80" />
         </div>
       </section>
     </div>

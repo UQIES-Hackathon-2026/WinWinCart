@@ -20,7 +20,7 @@ const modeCopy: Record<OptimiseMode, string> = {
   both: 'Balances the money you save against the time it takes.',
 }
 
-export function CreateTrip() {
+export function CreateShop() {
   const navigate = useNavigate()
   const tripList = useApp((state) => state.tripList)
   const basket = useApp((state) => state.basket)

@@ -3,7 +3,7 @@ import { getStoreById } from './stores'
 
 export const demoSavings = {
   allTimeSaved: 142.6,
-  equivalenceLine: "That's 5 jugs of milk",
+  equivalenceLine: "That's 7.5 jugs of milk",
   thisMonthSaved: 38.4,
   thisMonthSpent: 186.2,
   lastTripSaved: 12.4,

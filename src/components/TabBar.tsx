@@ -1,8 +1,8 @@
 import {
   Home,
   List,
-  MapPin,
   PiggyBank,
+  Store,
   WalletCards,
   type LucideIcon,
 } from 'lucide-react'
@@ -16,7 +16,7 @@ type Tab = {
 
 const tabs: Tab[] = [
   { label: 'Home', path: '/home', icon: Home },
-  { label: 'Trip', path: '/trip', icon: MapPin },
+  { label: 'Shop', path: '/shop', icon: Store },
   { label: 'My list', path: '/list', icon: List },
   { label: 'Wallet', path: '/wallet', icon: WalletCards },
   { label: 'Savings', path: '/savings', icon: PiggyBank },

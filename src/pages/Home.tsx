@@ -23,14 +23,14 @@ export function Home() {
 
       <SavingsBasket
         className="mx-auto mt-6"
-        summary={`${formatCurrency(demoSavings.allTimeSaved)} saved. ${demoSavings.equivalenceLine}.`}
+        summary={`${formatCurrency(demoSavings.thisMonthSaved)} saved. ${demoSavings.equivalenceLine}.`}
       />
 
       <HeroFigure className="mt-6 text-center">
-        {formatCurrency(demoSavings.allTimeSaved)}
+        {formatCurrency(demoSavings.thisMonthSaved)}
       </HeroFigure>
       <p className="mt-2 text-center text-base text-xs text-mute">
-        saved vs Coles/Woolworths average
+        saved in August
       </p>
       <p className="mt-1 text-center text-[15px] font-semibold">
         {demoSavings.equivalenceLine}
@@ -56,7 +56,7 @@ export function Home() {
           value={formatCurrency(demoSavings.thisMonthSpent)}
         />
         <StatRow
-          label="Last trip saved"
+          label="Last shop saved"
           value={formatCurrency(demoSavings.lastTripSaved)}
         />
       </div>

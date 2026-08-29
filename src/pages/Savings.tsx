@@ -20,7 +20,7 @@ export function Savings() {
         {formatCurrency(demoSavings.allTimeSaved)}
       </HeroFigure>
       <p className="mt-2 text-[13px] text-mute">
-        All time saved vs Coles/Woolworths average
+        All time saved vs market average
       </p>
 
       <div className="mt-8 border-t border-rule">
@@ -64,7 +64,7 @@ export function Savings() {
       </section>
 
       <section className="mt-8">
-        <SectionLabel>Trip history</SectionLabel>
+        <SectionLabel>Shop history</SectionLabel>
         <ul className="mt-3 border-t border-rule">
           {demoTrips.map((trip) => (
             <li

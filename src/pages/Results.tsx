@@ -19,7 +19,7 @@ export function Results() {
       <button
         aria-label="Back"
         className="flex h-11 w-11 items-center justify-center rounded-xl border border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
-        onClick={() => navigate('/trip/create')}
+        onClick={() => navigate('/shop/create')}
         type="button"
       >
         <ArrowLeft size={20} strokeWidth={1.75} />

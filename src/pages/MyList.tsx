@@ -13,7 +13,7 @@ type ListTab = 'items' | 'ingredients' | 'trips'
 const listTabs = [
   { label: 'Items', value: 'items' as const },
   { label: 'Ingredients', value: 'ingredients' as const },
-  { label: 'Trips', value: 'trips' as const },
+  { label: 'Shops', value: 'trips' as const },
 ]
 
 export function MyList() {
@@ -82,7 +82,7 @@ export function MyList() {
 
       {tab === 'trips' && (
         <section className="mt-8">
-          <SectionLabel>Saved trips</SectionLabel>
+          <SectionLabel>Saved shops</SectionLabel>
           <ul className="mt-3">
             {demoSavedTrips.map((trip) => (
               <li

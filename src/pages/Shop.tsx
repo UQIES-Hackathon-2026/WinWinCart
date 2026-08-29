@@ -5,10 +5,10 @@ import { stores } from '../data/stores'
 
 const exploreStores = stores.slice(0, 4)
 
-export function Trip() {
+export function Shop() {
   return (
     <div className="px-5 pb-24 pt-8">
-      <h1 className="text-2xl font-bold tracking-tight">Trip</h1>
+      <h1 className="text-2xl font-bold tracking-tight">Shop</h1>
       <p className="mt-3 text-base leading-6 text-mute">
         Plan your next shop and see what is nearby.
       </p>
