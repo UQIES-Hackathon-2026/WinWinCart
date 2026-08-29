@@ -42,8 +42,8 @@ export function CreateTrip() {
   )
 
   return (
-    <div className="flex min-h-full flex-col">
-      <div className="flex-1 px-5 pb-4 pt-6">
+    <div className="page-container page-create-trip flex min-h-full flex-col">
+      <div className="flex-1 pb-4 pt-6">
         <button
           aria-label="Back"
           className="flex h-11 w-11 items-center justify-center rounded-xl border border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
@@ -170,7 +170,7 @@ export function CreateTrip() {
         </section>
       </div>
 
-      <div className="sticky bottom-0 border-t border-rule bg-paper px-5 py-4">
+      <div className="sticky bottom-0 border-t border-rule bg-paper py-4">
         <Button
           className="w-full"
           disabled={lines.length === 0}

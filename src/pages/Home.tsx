@@ -9,8 +9,8 @@ import { formatCurrency } from '../lib/format'
 
 export function Home() {
   return (
-    <div className="px-5 pb-24 pt-6">
-      <div className="flex items-start justify-between gap-4">
+    <div className="page-container page-home pb-24 pt-6">
+      <div className="home-header flex items-start justify-between gap-4">
         <BrandLockup />
         <Link
           aria-label="Open profile"
@@ -21,29 +21,31 @@ export function Home() {
         </Link>
       </div>
 
-      <div className="glass-panel relative mx-auto mt-6 flex h-[278px] w-full max-w-[330px] items-center justify-center overflow-hidden rounded-[2rem]">
-        <div className="accent-orb-lime floating-orb absolute left-4 top-5 h-12 w-12 rounded-full blur-xl" />
-        <div className="accent-orb-forest absolute bottom-5 right-7 h-20 w-20 rounded-full blur-2xl" />
-        <SavingsBasket
-          className="relative z-[1]"
-          summary={`${formatCurrency(demoSavings.allTimeSaved)} saved. ${demoSavings.equivalenceLine}.`}
-        />
-        <span className="savings-badge absolute bottom-4 left-1/2 z-[2] -translate-x-1/2 rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-forest backdrop-blur">
-          Your savings orbit
-        </span>
-      </div>
+      <section className="home-story">
+        <div className="glass-panel relative mx-auto mt-6 flex h-[278px] w-full max-w-[330px] items-center justify-center overflow-hidden rounded-[2rem]">
+          <div className="accent-orb-lime floating-orb absolute left-4 top-5 h-12 w-12 rounded-full blur-xl" />
+          <div className="accent-orb-forest absolute bottom-5 right-7 h-20 w-20 rounded-full blur-2xl" />
+          <SavingsBasket
+            className="relative z-[1]"
+            summary={`${formatCurrency(demoSavings.allTimeSaved)} saved. ${demoSavings.equivalenceLine}.`}
+          />
+          <span className="savings-badge absolute bottom-4 left-1/2 z-[2] -translate-x-1/2 rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-[0.14em] text-forest backdrop-blur">
+            Your savings orbit
+          </span>
+        </div>
 
-      <HeroFigure className="mt-6 text-center">
-        {formatCurrency(demoSavings.allTimeSaved)}
-      </HeroFigure>
-      <p className="mt-2 text-center text-base text-xs text-mute">
-        saved vs Coles/Woolworths average
-      </p>
-      <p className="mt-1 text-center text-[15px] font-semibold">
-        {demoSavings.equivalenceLine}
-      </p>
+        <HeroFigure className="mt-6 text-center">
+          {formatCurrency(demoSavings.allTimeSaved)}
+        </HeroFigure>
+        <p className="mt-2 text-center text-base text-xs text-mute">
+          saved vs Coles/Woolworths average
+        </p>
+        <p className="mt-1 text-center text-[15px] font-semibold">
+          {demoSavings.equivalenceLine}
+        </p>
+      </section>
 
-      <div className="glass-panel mt-8 overflow-hidden rounded-2xl px-4">
+      <section className="home-metrics glass-panel mt-8 overflow-hidden rounded-2xl px-4">
         <div className="border-b border-rule py-4">
           <SectionLabel>My goal</SectionLabel>
           <div className="mt-3">
@@ -66,7 +68,7 @@ export function Home() {
           label="Last trip saved"
           value={formatCurrency(demoSavings.lastTripSaved)}
         />
-      </div>
+      </section>
     </div>
   )
 }

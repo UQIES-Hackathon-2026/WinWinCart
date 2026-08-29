@@ -10,7 +10,7 @@ export function Savings() {
   )
 
   return (
-    <div className="px-5 pb-8 pt-8">
+    <div className="page-container page-savings pb-8 pt-8">
       <h1 className="text-2xl font-bold tracking-tight">Savings</h1>
       <p className="mt-3 text-base leading-6 text-mute">
         Every dollar saved against the big two, tracked over time.
@@ -23,7 +23,7 @@ export function Savings() {
         All time saved vs Coles/Woolworths average
       </p>
 
-      <div className="mt-8 border-t border-rule">
+      <div className="savings-stats mt-8 border-t border-rule">
         <StatRow
           label="This month saved"
           value={formatCurrency(demoSavings.thisMonthSaved)}

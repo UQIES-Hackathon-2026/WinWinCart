@@ -13,8 +13,8 @@ export function Basket() {
   const benchmarkTotal = getBasketBenchmarkTotal(basket)
 
   return (
-    <div className="flex min-h-full flex-col">
-      <div className="flex-1 px-5 pb-4 pt-8">
+    <div className="page-container page-basket flex min-h-full flex-col">
+      <div className="flex-1 pb-4 pt-8">
         <h1 className="text-2xl font-bold tracking-tight">Basket</h1>
         <p className="mt-3 text-base leading-6 text-mute">
           Your grocery cart, priced against Coles/Woolworths average.
@@ -50,7 +50,7 @@ export function Basket() {
         )}
       </div>
 
-      <div className="sticky bottom-16 border-t border-rule bg-paper px-5 py-4">
+      <div className="sticky bottom-16 border-t border-rule bg-paper py-4">
         <Button
           className="w-full"
           disabled={basket.length === 0}

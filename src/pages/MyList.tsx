@@ -20,7 +20,7 @@ export function MyList() {
   const [tab, setTab] = useState<ListTab>('items')
 
   return (
-    <div className="px-5 pb-8 pt-8">
+    <div className="page-container page-list pb-8 pt-8">
       <h1 className="text-2xl font-bold tracking-tight">My list</h1>
       <p className="mt-3 text-base leading-6 text-mute">
         Favorites you reach for again and again.

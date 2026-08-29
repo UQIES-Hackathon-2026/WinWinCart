@@ -13,6 +13,15 @@ type ThemeOption = {
 
 const themeOptions: ThemeOption[] = [
   {
+    id: 'cloverpriced-original',
+    name: 'Cloverpriced original',
+    mood: 'The classic green',
+    paper: '#ffffff',
+    ink: '#000000',
+    accent: '#084e46',
+    highlight: '#91ef5b',
+  },
+  {
     id: 'solarized-light',
     name: 'Solarized light',
     mood: 'Warm & focused',
@@ -209,7 +218,7 @@ export function ThemePicker({ value, onChange }: ThemePickerProps) {
       <p className="mt-1 text-[13px] text-mute">
         Six carefully tuned palettes for every kind of shop.
       </p>
-      <div className="mt-4 grid grid-cols-2 gap-3">
+      <div className="mt-4 grid grid-cols-2 gap-3 md:grid-cols-3">
         {themeOptions.map((option) => {
           const selected = option.id === value
 

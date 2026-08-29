@@ -17,7 +17,7 @@ export function HeroFigure({
   return (
     <p
       className={[
-        'tnum font-display text-[64px] leading-none tracking-tight',
+        'hero-figure tnum font-display text-[64px] leading-none tracking-tight',
         colors[color],
         className,
       ].join(' ')}

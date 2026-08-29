@@ -20,7 +20,7 @@ export function KitchenSink() {
   const [mode, setMode] = useState<Mode>('both')
 
   return (
-    <div className="px-5 pb-8 pt-6">
+    <div className="page-container page-kitchen-sink pb-8 pt-6">
       <header className="border-b border-rule pb-6">
         <BrandLockup />
         <p className="mt-3 max-w-[32ch] text-base leading-6 text-mute">

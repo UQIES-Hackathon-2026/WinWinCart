@@ -5,6 +5,7 @@ import { demoBasketLines, demoSavings } from '../data/demo'
 export type Transport = 'car' | 'bus' | 'walk'
 export type OptimiseMode = 'price' | 'time' | 'both'
 export type Theme =
+  | 'cloverpriced-original'
   | 'solarized-light'
   | 'solarized-dark'
   | 'catppuccin-latte'

@@ -32,7 +32,7 @@ export function Profile() {
   const resetDemo = useApp((state) => state.resetDemo)
 
   return (
-    <div className="px-5 pb-8 pt-6">
+    <div className="page-container page-profile pb-8 pt-6">
       <button
         aria-label="Back to home"
         className="flex h-11 w-11 items-center justify-center rounded-xl border border-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-forest"
