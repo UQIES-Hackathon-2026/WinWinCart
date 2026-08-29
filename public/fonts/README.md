@@ -1,7 +1,11 @@
 # Sirage font
 
-Place a licensed copy of `Sirage.woff2` in this directory. The app declares the
-font in `src/index.css` and falls back to `sans-serif` when the file is absent.
+`sirage.woff2` is self-hosted here and served at `/fonts/sirage.woff2` (Vite copies
+`public/` to the site root on build).
 
-The font listing referenced by the prototype specification is for personal use.
-Resolve commercial licensing before using Sirage outside a demo or pitch.
+The app declares the font in `src/index.css` and uses it via Tailwind's
+`font-display` utility (`fontFamily.display` → Sirage, sans-serif fallback).
+
+Source copy: `Assets/fonts/sirage.woff2` (keep in sync if you replace the file).
+
+> Licensing: resolve commercial licensing before using Sirage outside a demo or pitch.

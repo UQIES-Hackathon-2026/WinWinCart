@@ -2,8 +2,10 @@
 
 @font-face {
   font-family: 'Sirage';
-  src: url('/fonts/Sirage.woff2') format('woff2');
+  src: url('/fonts/sirage.woff2') format('woff2');
   font-display: swap;
+  font-weight: normal;
+  font-style: normal;
 }
 
 @tailwind base;
