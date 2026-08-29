@@ -7,7 +7,7 @@ export function SectionLabel({
   return (
     <p
       className={[
-        'text-[11px] font-bold uppercase tracking-[0.08em] text-mute',
+        'section-label text-[11px] font-bold uppercase tracking-[0.08em] text-mute',
         className,
       ].join(' ')}
       {...props}

@@ -16,6 +16,126 @@ html[data-theme='catppuccin-latte'] {
   --shadow: rgba(76, 79, 105, 0.18);
 }
 
+html[data-theme='bugatti-light'] {
+  color-scheme: light;
+  --ink: #111111;
+  --paper: #f4f4f2;
+  --forest: #111111;
+  --lime: #c3d9f3;
+  --rule: #d4d4d2;
+  --mute: #777777;
+  --sunk: #ebebea;
+  --glass: rgba(244, 244, 242, 0.92);
+  --app-backdrop: #dededc;
+  --glow: rgba(17, 17, 17, 0.12);
+  --shadow: rgba(17, 17, 17, 0.12);
+}
+
+html[data-theme='bugatti-dark'] {
+  color-scheme: dark;
+  --ink: #ffffff;
+  --paper: #000000;
+  --forest: #ffffff;
+  --lime: #c3d9f3;
+  --rule: #262626;
+  --mute: #999999;
+  --sunk: #0d0d0d;
+  --glass: rgba(13, 13, 13, 0.94);
+  --app-backdrop: #000000;
+  --glow: rgba(255, 255, 255, 0.12);
+  --shadow: rgba(0, 0, 0, 0.36);
+}
+
+html[data-theme='bmw-m-light'] {
+  color-scheme: light;
+  --ink: #111111;
+  --paper: #f4f5f7;
+  --forest: #1c69d4;
+  --lime: #0066b1;
+  --rule: #c9d0d8;
+  --mute: #5c6670;
+  --sunk: #e9edf2;
+  --glass: rgba(244, 245, 247, 0.94);
+  --app-backdrop: #d9dfe7;
+  --glow: rgba(28, 105, 212, 0.2);
+  --shadow: rgba(17, 17, 17, 0.14);
+}
+
+html[data-theme='bmw-m-dark'] {
+  color-scheme: dark;
+  --ink: #ffffff;
+  --paper: #000000;
+  --forest: #1c69d4;
+  --lime: #0066b1;
+  --rule: #3c3c3c;
+  --mute: #7e7e7e;
+  --sunk: #0d0d0d;
+  --glass: rgba(26, 26, 26, 0.94);
+  --app-backdrop: #000000;
+  --glow: rgba(28, 105, 212, 0.22);
+  --shadow: rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme='cal-light'] {
+  color-scheme: light;
+  --ink: #111111;
+  --paper: #ffffff;
+  --forest: #111111;
+  --lime: #3b82f6;
+  --rule: #e5e7eb;
+  --mute: #6b7280;
+  --sunk: #f5f5f5;
+  --glass: rgba(245, 245, 245, 0.94);
+  --app-backdrop: #eef0f4;
+  --glow: rgba(17, 17, 17, 0.14);
+  --shadow: rgba(17, 17, 17, 0.1);
+}
+
+html[data-theme='cal-dark'] {
+  color-scheme: dark;
+  --ink: #f5f5f5;
+  --paper: #101010;
+  --forest: #ffffff;
+  --lime: #60a5fa;
+  --rule: #303030;
+  --mute: #a1a1aa;
+  --sunk: #1a1a1a;
+  --glass: rgba(26, 26, 26, 0.94);
+  --app-backdrop: #090909;
+  --glow: rgba(96, 165, 250, 0.2);
+  --shadow: rgba(0, 0, 0, 0.38);
+}
+
+html[data-theme='dell-1996-light'] {
+  color-scheme: light;
+  --ink: #000000;
+  --paper: #ffffff;
+  --forest: #e91d2a;
+  --lime: #fcc20f;
+  --rule: #000000;
+  --mute: #333333;
+  --sunk: #f3f3f3;
+  --glass: rgba(255, 255, 255, 0.98);
+  --app-backdrop: #000000;
+  --glow: rgba(233, 29, 42, 0.2);
+  --shadow: rgba(0, 0, 0, 0.28);
+}
+
+html[data-theme='dell-1996-dark'] {
+  color-scheme: dark;
+  --ink: #ffffff;
+  --paper: #151515;
+  --forest: #e91d2a;
+  --lime: #fcc20f;
+  --rule: #ffffff;
+  --mute: #cccccc;
+  --sunk: #252525;
+  --glass: rgba(21, 21, 21, 0.98);
+  --app-backdrop: #000000;
+  --glow: rgba(233, 29, 42, 0.22);
+  --shadow: rgba(0, 0, 0, 0.46);
+}
+
 html[data-theme='cloverpriced-original'] {
   color-scheme: light;
   --ink: #000000;
@@ -548,6 +668,169 @@ html[data-theme='cyberpunk'] {
     var(--paper);
 }
 
+html[data-theme^='bugatti'] .page-stage {
+  font-family: Garamond, 'Times New Roman', serif;
+}
+
+html[data-theme^='bugatti'] .page-stage h1,
+html[data-theme^='bugatti'] .page-stage .hero-figure {
+  font-family: 'Times New Roman', Garamond, serif;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+html[data-theme^='bugatti'] .page-stage h1 {
+  font-size: clamp(1.75rem, 4vw, 3rem);
+}
+
+html[data-theme^='bugatti'] .section-label,
+html[data-theme^='bugatti'] .app-button,
+html[data-theme^='bugatti'] .tab-link {
+  font-family: ui-monospace, 'Cascadia Mono', monospace;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+html[data-theme^='bugatti'] .glass-panel {
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+html[data-theme^='bugatti'] .app-button {
+  border-radius: 9999px;
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+
+html[data-theme^='bugatti'] .app-button:not(:disabled):hover {
+  background: var(--ink);
+  color: var(--paper);
+  box-shadow: none;
+}
+
+html[data-theme^='bugatti'] .tab-bar {
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+html[data-theme^='bugatti'] .theme-choice {
+  border-radius: 0;
+}
+
+html[data-theme^='bmw-m'] .page-stage {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html[data-theme^='bmw-m'] .page-stage h1,
+html[data-theme^='bmw-m'] .page-stage .hero-figure {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+html[data-theme^='bmw-m'] .glass-panel {
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+html[data-theme='bmw-m-light'] .app-button {
+  border-color: #000000;
+  border-radius: 0;
+  background: #000000;
+  color: #ffffff;
+}
+
+html[data-theme='bmw-m-dark'] .app-button {
+  border-color: #ffffff;
+  border-radius: 0;
+  background: transparent;
+  color: #ffffff;
+}
+
+html[data-theme^='bmw-m'] .tab-bar {
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+html[data-theme^='bmw-m'] .tab-bar::after {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 4px;
+  background: linear-gradient(to right, #0066b1 33%, #1c69d4 33% 66%, #e22718 66%);
+  content: '';
+}
+
+html[data-theme^='cal-'] .page-stage {
+  font-family: Inter, 'Segoe UI', sans-serif;
+}
+
+html[data-theme^='cal-'] .page-stage h1,
+html[data-theme^='cal-'] .page-stage .hero-figure {
+  font-family: Inter, 'Segoe UI', sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+html[data-theme^='cal-'] .glass-panel {
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow);
+  backdrop-filter: none;
+}
+
+html[data-theme^='cal-'] .app-button {
+  border-radius: 8px;
+}
+
+html[data-theme^='dell-1996'] .app-shell {
+  border: 8px solid #000000;
+  border-radius: 0;
+}
+
+html[data-theme^='dell-1996'] .page-stage {
+  font-family: 'Times New Roman', Times, serif;
+}
+
+html[data-theme^='dell-1996'] .page-stage h1,
+html[data-theme^='dell-1996'] .page-stage .hero-figure {
+  font-family: 'Arial Black', Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+html[data-theme^='dell-1996'] .section-label,
+html[data-theme^='dell-1996'] .app-button,
+html[data-theme^='dell-1996'] .tab-link {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+html[data-theme^='dell-1996'] .glass-panel {
+  border: 1px solid var(--ink);
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+html[data-theme^='dell-1996'] .app-button {
+  border-radius: 0;
+  background: var(--ink);
+  color: var(--paper);
+}
+
+html[data-theme^='dell-1996'] .theme-choice {
+  border-radius: 0;
+}
+
 .theme-choice {
   position: relative;
   overflow: hidden;
@@ -777,5 +1060,9 @@ html[data-theme='cyberpunk'] {
     max-width: none;
     border-inline: 0;
     box-shadow: none;
+  }
+
+  html[data-theme^='dell-1996'] .app-shell {
+    border-width: 2px;
   }
 }
