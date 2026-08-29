@@ -1,6 +1,6 @@
-import { ArrowLeft, Clock, MapPin } from 'lucide-react'
+import { ArrowLeft, Clock, Home, MapPin } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import { SectionLabel } from '../components/ui'
+import { Button, SectionLabel } from '../components/ui'
 import { demoResultQuotes } from '../data/demo'
 import { getStoreById } from '../data/stores'
 import { formatCurrency } from '../lib/format'
@@ -95,6 +95,17 @@ export function Results() {
         Rankings use hardcoded demo quotes. Phase 2 will wire the pricing
         engine from design.md.
       </p>
+
+      <Button
+        className="mt-6 w-full"
+        onClick={() => navigate('/home')}
+        variant="secondary"
+      >
+        <span className="inline-flex items-center justify-center gap-2">
+          <Home aria-hidden="true" size={18} strokeWidth={1.75} />
+          Go home
+        </span>
+      </Button>
     </div>
   )
 }
