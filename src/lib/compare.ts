@@ -53,6 +53,45 @@ function unitPriceAt(line: CartLine, chain: Chain): number {
   return round2(base * chainMultiplier(chain, category))
 }
 
+export type ItemDeal = {
+  /** Fraction off, e.g. 0.5 for half price. */
+  fraction: number
+  label: string
+}
+
+const DEAL_TABLE: ItemDeal[] = [
+  { fraction: 0.2, label: '20% off' },
+  { fraction: 0.25, label: '25% off' },
+  { fraction: 0.3, label: '30% off' },
+  { fraction: 0.4, label: '40% off' },
+  { fraction: 0.5, label: '½ price' },
+]
+
+function hashString(value: string): number {
+  let hash = 0
+  for (let index = 0; index < value.length; index += 1) {
+    hash = (hash * 31 + value.charCodeAt(index)) | 0
+  }
+  return Math.abs(hash)
+}
+
+/**
+ * Deterministic illustrative special for an item at a given store. Cosmetic
+ * only — it does not change trip totals.
+ */
+export function dealFor(itemId: string, chain: Chain): ItemDeal | null {
+  const hash = hashString(`${itemId}@${chain}`)
+  if (hash % 100 >= 30) return null
+  return DEAL_TABLE[hash % DEAL_TABLE.length]
+}
+
+/** Same pick as {@link dealFor} but never null — used to guarantee the headline
+ * trip always shows a few specials. */
+export function guaranteedDealFor(itemId: string, chain: Chain): ItemDeal {
+  const hash = hashString(`${itemId}@${chain}`)
+  return DEAL_TABLE[hash % DEAL_TABLE.length]
+}
+
 export function benchmarkTotal(lines: CartLine[]): number {
   return round2(
     lines.reduce(
