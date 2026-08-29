@@ -56,8 +56,16 @@
   position: relative;
   display: flex;
   width: 100%;
+  max-width: 390px;
   height: 100dvh;
+  margin-inline: auto;
   flex-direction: column;
   overflow: hidden;
   background: theme('colors.paper');
+}
+
+@media (max-width: 480px) {
+  .app-shell {
+    max-width: none;
+  }
 }
